@@ -1,0 +1,3962 @@
+{
+ "source": "https://github.com/flick9000/winscript",
+ "generated": "2026-11-22T17:19:05.355Z",
+ "categories": [
+  {
+   "id": "tools",
+   "title": {
+    "en": "Tools",
+    "pt": "Ferramentas"
+   },
+   "groups": [
+    {
+     "id": "cleanmgr",
+     "title": {
+      "en": "Clean-up",
+      "pt": "Limpar"
+     },
+     "desc": {
+      "en": "Free up disk space by cleaning up temporary files.",
+      "pt": "Libera espaço em disco limpando arquivos temporários."
+     },
+     "items": [
+      {
+       "id": "cleanmgr",
+       "title": {
+        "en": "Run Disk Cleanup",
+        "pt": "Executar Limpeza de Disco"
+       },
+       "commands": [
+        "Write-Host '-- Running Disk Clean-up' -ForegroundColor Magenta",
+        "cleanmgr /verylowdisk /sagerun:5"
+       ]
+      },
+      {
+       "id": "cleantemp",
+       "title": {
+        "en": "Clean Temporary Files",
+        "pt": "Limpar Arquivos Temporários"
+       },
+       "commands": [
+        "Write-Host '-- Deleting Temp files' -ForegroundColor Magenta",
+        "Remove-Item -Path \"$env:SystemDrive\\Windows\\Temp\\*\" -Recurse -Force",
+        "Remove-Item -Path \"$env:LOCALAPPDATA\\Temp\\*\" -Recurse -Force",
+        "Remove-Item -Path \"$env:SystemDrive\\Windows\\Prefetch\\*\" -Recurse -Force"
+       ]
+      },
+      {
+       "id": "emptyrecycle",
+       "title": {
+        "en": "Empty Recycle Bin",
+        "pt": "Esvaziar Lixeira"
+       },
+       "commands": [
+        "Write-Host '-- Emptying Recycle Bin' -ForegroundColor Magenta",
+        "Clear-RecycleBin -Force -ErrorAction SilentlyContinue"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "dism",
+     "title": {
+      "en": "Repair",
+      "pt": "Reparar"
+     },
+     "desc": {
+      "en": "Verify system files integrity and fix corrupt files.",
+      "pt": "Verifica a integridade dos arquivos do sistema e corrige arquivos corrompidos."
+     },
+     "items": [
+      {
+       "id": "dism",
+       "title": {
+        "en": "DISM (Deployment Image Servicing Manager)",
+        "pt": "DISM (Deployment Image Servicing Manager)"
+       },
+       "commands": [
+        "Write-Host '-- Running DISM' -ForegroundColor Magenta",
+        "DISM /Online /Cleanup-Image /RestoreHealth"
+       ]
+      },
+      {
+       "id": "sfc",
+       "title": {
+        "en": "SFC (System File Checker)",
+        "pt": "SFC (System File Checker)"
+       },
+       "commands": [
+        "Write-Host '-- Running SFC' -ForegroundColor Magenta",
+        "sfc /scannow"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "restorepoint",
+     "title": {
+      "en": "Create Restore Point",
+      "pt": "Criar Ponto de Restauração"
+     },
+     "desc": {
+      "en": "Creates a restore point before applying the tweaks.",
+      "pt": "Cria um ponto de restauração antes de aplicar as alterações."
+     },
+     "items": [
+      {
+       "id": "restorepoint",
+       "title": {
+        "en": "Create Restore Point",
+        "pt": "Criar Ponto de Restauração"
+       },
+       "commands": [
+        "Write-Host '-- Creating a restore point' -ForegroundColor Magenta",
+        "Enable-ComputerRestore -Drive \"$env:SystemDrive\\\"",
+        "Checkpoint-Computer -Description \"Deblowin\" -RestorePointType \"MODIFY_SETTINGS\""
+       ],
+       "desc": {
+        "en": "Creates a restore point before applying the tweaks.",
+        "pt": "Cria um ponto de restauração antes de aplicar as alterações."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "browserhistory",
+     "title": {
+      "en": "Clear Browser History",
+      "pt": "Limpar Histórico do Navegador"
+     },
+     "desc": {
+      "en": "Clears Chrome, Edge, Brave and Firefox history.",
+      "pt": "Limpa o histórico do Chrome, Edge, Brave e Firefox."
+     },
+     "items": [
+      {
+       "id": "browserhistory",
+       "title": {
+        "en": "Clear Browser History",
+        "pt": "Limpar Histórico do Navegador"
+       },
+       "commands": [
+        "Write-Host '-- Clearing Browser History' -ForegroundColor Magenta",
+        "Remove-Item -Path \"$env:LocalAppData\\Google\\Chrome\\User Data\\Default\\History\" -Recurse -Force",
+        "Remove-Item -Path \"$env:LocalAppData\\Google\\Chrome\\User Data\\Default\\Cache\\*\" -Recurse -Force",
+        "Remove-Item -Path \"$env:LocalAppData\\Google\\Chrome\\User Data\\Default\\Cookies\" -Recurse -Force",
+        "Remove-Item -Path \"$env:LocalAppData\\Microsoft\\Edge\\User Data\\Default\\History\" -Recurse -Force",
+        "Remove-Item -Path \"$env:LocalAppData\\Microsoft\\Edge\\User Data\\Default\\Cache\\*\" -Recurse -Force",
+        "Remove-Item -Path \"$env:LocalAppData\\Microsoft\\Edge\\User Data\\Default\\Cookies\" -Recurse -Force",
+        "Remove-Item -Path \"$env:AppData\\Mozilla\\Firefox\\Profiles\\*.default\\places.sqlite\" -Recurse -Force",
+        "Remove-Item -Path \"$env:AppData\\Mozilla\\Firefox\\Profiles\\*.default\\cache2\\entries\\*\" -Recurse -Force",
+        "Remove-Item -Path \"$env:LocalAppData\\BraveSoftware\\Brave-Browser\\User Data\\Default\\History\" -Recurse -Force",
+        "Remove-Item -Path \"$env:LocalAppData\\BraveSoftware\\Brave-Browser\\User Data\\Default\\Cache\\*\" -Recurse -Force",
+        "Remove-Item -Path \"$env:LocalAppData\\BraveSoftware\\Brave-Browser\\User Data\\Default\\Cookies\" -Recurse -Force"
+       ],
+       "desc": {
+        "en": "Clears Chrome, Edge, Brave and Firefox history.",
+        "pt": "Limpa o histórico do Chrome, Edge, Brave e Firefox."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "resetnetwork",
+     "title": {
+      "en": "Reset Network",
+      "pt": "Redefinir Rede"
+     },
+     "desc": {
+      "en": "Flushes the DNS and renews the IP address.",
+      "pt": "Limpa o DNS e renova o endereço IP."
+     },
+     "items": [
+      {
+       "id": "resetnetwork",
+       "title": {
+        "en": "Reset Network",
+        "pt": "Redefinir Rede"
+       },
+       "commands": [
+        "Write-Host '-- Resetting Network' -ForegroundColor Magenta",
+        "ipconfig /flushdns",
+        "ipconfig /release | Out-Null",
+        "ipconfig /renew | Out-Null",
+        "netsh winsock reset | Out-Null",
+        "netsh int ip reset | Out-Null"
+       ],
+       "desc": {
+        "en": "Flushes the DNS and renews the IP address.",
+        "pt": "Limpa o DNS e renova o endereço IP."
+       }
+      }
+     ],
+     "single": true
+    }
+   ]
+  },
+  {
+   "id": "debloat",
+   "title": {
+    "en": "Debloat",
+    "pt": "Debloat"
+   },
+   "groups": [
+    {
+     "id": "windowsfeatures",
+     "title": {
+      "en": "Windows Features",
+      "pt": "Recursos do Windows"
+     },
+     "desc": {
+      "en": "Disable pre-installed features.",
+      "pt": "Desativa recursos pré-instalados."
+     },
+     "items": [
+      {
+       "id": "consumerfeatures",
+       "title": {
+        "en": "Disable Consumer Features",
+        "pt": "Desativar Experiências do Consumidor"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Consumer Features' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent\" /v \"DisableWindowsConsumerFeatures\" /t \"REG_DWORD\" /d \"1\" /f"
+       ],
+       "desc": {
+        "en": "Disables automatic installation of Windows Store apps.",
+        "pt": "Desativa a instalação automática de aplicativos da Windows Store."
+       }
+      },
+      {
+       "id": "hyperv",
+       "title": {
+        "en": "Disable Hyper-V",
+        "pt": "Desativar Hyper-V"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Hyper-V' -ForegroundColor Magenta",
+        "try { Disable-WindowsOptionalFeature -FeatureName \"Microsoft-Hyper-V-All\" -Online -NoRestart -ErrorAction Stop; Write-Output \"Successfully disabled the feature Microsoft-Hyper-V-All.\" } catch { Write-Output \"Feature not found: Microsoft-Hyper-V-All\" }"
+       ],
+       "desc": {
+        "en": "VMs might stop working after disabling this feature.",
+        "pt": "Máquinas virtuais podem parar de funcionar após desativar este recurso."
+       }
+      },
+      {
+       "id": "iexplorer",
+       "title": {
+        "en": "Disable Internet Explorer",
+        "pt": "Desativar Internet Explorer"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Internet Explorer' -ForegroundColor Magenta",
+        "dism /online /Disable-Feature /FeatureName:Internet-Explorer-Optional-amd64 | Out-Null; if ($LASTEXITCODE -eq 0) { Write-Host \"Successfully removed the feature: Internet-Explorer-Optional-amd64\" } else { Write-Host \"Feature not found: Internet-Explorer-Optional-amd64\" }"
+       ]
+      },
+      {
+       "id": "faxscan",
+       "title": {
+        "en": "Disable Fax & Scan",
+        "pt": "Desativar Fax & Scan"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Fax and Scan' -ForegroundColor Magenta",
+        "dism /Online /Disable-Feature /FeatureName:FaxServicesClientPackage | Out-Null; if ($LASTEXITCODE -eq 0) { Write-Host \"Successfully removed the feature: FaxServicesClientPackage\" } else { Write-Host \"Feature not found: FaxServicesClientPackage\" }"
+       ]
+      },
+      {
+       "id": "mediaplayer",
+       "title": {
+        "en": "Disable Media Player",
+        "pt": "Desativar Media Player"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Windows Media Player' -ForegroundColor Magenta",
+        "try { Disable-WindowsOptionalFeature -FeatureName \"WindowsMediaPlayer\" -Online -NoRestart -ErrorAction Stop | Out-Null; Write-Output \"Successfully disabled the feature WindowsMediaPlayer.\" } catch { Write-Output \"Feature not found.\" }"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "windowsai",
+     "title": {
+      "en": "Windows AI",
+      "pt": "Inteligência Artificial do Windows"
+     },
+     "desc": {
+      "en": "Remove AI features from Windows.",
+      "pt": "Remove recursos de IA do Windows."
+     },
+     "items": [
+      {
+       "id": "aiappxpackages",
+       "title": {
+        "en": "Remove AI Packages",
+        "pt": "Remover Pacotes de IA"
+       },
+       "commands": [
+        "Write-Host '-- Removing AI AppX Packages' -ForegroundColor Magenta",
+        "$aiPackages = @('Microsoft.Windows.Ai.Copilot.Provider','Microsoft.Copilot','Microsoft.WindowsAiFoundation','Microsoft.Windows.Recall'); foreach ($package in $aiPackages) { try { $removed = $false; $appxPackages = Get-AppxPackage -Name $package -AllUsers; if ($appxPackages) { $appxPackages | Remove-AppxPackage -AllUsers; $removed = $true; } $provisionedPackages = Get-AppxProvisionedPackage -Online | Where-Object DisplayName -like $package; if ($provisionedPackages) { $provisionedPackages | Remove-AppxProvisionedPackage -Online; $removed = $true; } if ($removed) { Write-Host 'Removed: ' $package; } } catch { Write-Host 'Could not remove: ' $package -ForegroundColor Red; } }"
+       ]
+      },
+      {
+       "id": "copilot",
+       "title": {
+        "en": "Remove Copilot",
+        "pt": "Remover Copilot"
+       },
+       "commands": [
+        "Write-Host '-- Removing Copilot' -ForegroundColor Magenta",
+        "Get-AppxPackage \"Microsoft.CoPilot\" | Remove-AppxPackage",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsCopilot\" /v \"TurnOffWindowsCopilot\" /t \"REG_DWORD\" /d \"1\" /f",
+        "reg add \"HKCU\\Software\\Policies\\Microsoft\\Windows\\WindowsCopilot\" /v \"TurnOffWindowsCopilot\" /t \"REG_DWORD\" /d \"1\" /f",
+        "reg add \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Notifications\\Settings\" /v \"AutoOpenCopilotLargeScreens\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" /v \"ShowCopilotButton\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\Shell\\Copilot\" /v \"CopilotDisabledReason\" /t \"REG_SZ\" /d \"IsEnabledForGeographicRegionFailed\" /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WindowsCopilot\" /v \"AllowCopilotRuntime\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Blocked\" /v \"{CB3B0003-8088-4EDE-8769-8B354AB2FF8C}\" /t \"REG_SZ\" /d \" \" /f",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\Shell\\Copilot\" /v \"IsCopilotAvailable\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKCU\\Software\\Microsoft\\Windows\\Shell\\Copilot\\BingChat\" /v \"IsUserEligible\" /t \"REG_DWORD\" /d \"0\" /f"
+       ]
+      },
+      {
+       "id": "recall",
+       "title": {
+        "en": "Remove Recall",
+        "pt": "Remover Recall"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Recall' -ForegroundColor Magenta",
+        "DISM /Online /Disable-Feature /NoRestart /FeatureName:Recall | Out-Null; if ($LASTEXITCODE -eq 0) { Write-Host \"Successfully removed the feature: Recall\" } else { Write-Host \"Feature not found: Recall\" }",
+        "$recallTasks = @('\\Microsoft\\Windows\\WindowsAI\\*', '\\Microsoft\\Windows\\Recall\\*'); foreach ($taskPath in $recallTasks) { try { $tasks = Get-ScheduledTask -TaskPath $taskPath -ErrorAction SilentlyContinue; if ($tasks) { $tasks | Unregister-ScheduledTask -Confirm:$false -ErrorAction Stop; $taskCount = ($tasks | Measure-Object).Count; Write-Host \"Removed $taskCount task(s) from: $taskPath\" -ForegroundColor Magenta; } } catch { Write-Host \"Could not remove tasks from: $taskPath\" -ForegroundColor Red; } }",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI\" /v \"DisableAIDataAnalysis\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI\" /v \"AllowRecallEnablement\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI\" /v \"TurnOffSavingSnapshots\" /t REG_DWORD /d 1 /f"
+       ]
+      },
+      {
+       "id": "clicktodo",
+       "title": {
+        "en": "Disable Click To Do",
+        "pt": "Disable Click To Do"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Click To Do' -ForegroundColor Magenta",
+        "reg add \"HKCU\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI\" /v \"DisableClickToDo\" /t REG_DWORD /d \"1\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI\" /v \"DisableClickToDo\" /t REG_DWORD /d \"1\" /f"
+       ]
+      },
+      {
+       "id": "notepadrewrite",
+       "title": {
+        "en": "Disable Notepad AI",
+        "pt": "Desativar IA do Notepad"
+       },
+       "commands": [
+        "Write-Host '-- Removing AI from Notepad' -ForegroundColor Magenta",
+        "reg add \"HKLM\\Software\\Policies\\WindowsNotepad\" /v \"DisableAIFeatures\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKCU\\Software\\Microsoft\\Notepad\" /v \"ShowRewriteButton\" /t REG_DWORD /d 0 /f"
+       ]
+      },
+      {
+       "id": "paintai",
+       "title": {
+        "en": "Disable Paint AI",
+        "pt": "Disable Paint AI"
+       },
+       "commands": [
+        "Write-Host '-- Removing AI from Paint' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Paint\" /v \"DisableCocreator\" /t REG_DWORD /d \"1\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Paint\" /v \"DisableGenerativeFill\" /t REG_DWORD /d \"1\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Paint\" /v \"DisableImageCreator\" /t REG_DWORD /d \"1\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Paint\" /v \"DisableGenerativeErase\" /t REG_DWORD /d \"1\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Paint\" /v \"DisableRemoveBackground\" /t REG_DWORD /d \"1\" /f"
+       ]
+      },
+      {
+       "id": "aifiles",
+       "title": {
+        "en": "Remove AI Files",
+        "pt": "Remover Arquivos de IA"
+       },
+       "commands": [
+        "Write-Host '-- Removing AI Files' -ForegroundColor Magenta",
+        "$aiPaths = @(\"$env:ProgramFiles\\WindowsApps\\Microsoft.Copilot*\", \"$env:ProgramFiles\\WindowsApps\\Microsoft.Windows.Ai*\", \"$env:LocalAppData\\Packages\\Microsoft.Copilot*\", \"$env:LocalAppData\\Packages\\Microsoft.Windows.Ai*\", \"$env:SystemRoot\\SystemApps\\Microsoft.Windows.Copilot*\"); foreach ($path in $aiPaths) { if (Test-Path $path) { try { Remove-Item -Path $path -Recurse -Force; Write-Host \"Removed: $path\" -ForegroundColor Magenta } catch { Write-Host \"Could not remove: $path\" -ForegroundColor Red } } }"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "debloat-microsoft",
+     "title": {
+      "en": "Remove Microsoft Apps",
+      "pt": "Remover Aplicativos da Microsoft"
+     },
+     "desc": {
+      "en": "Removes pre-installed apps like Solitaire, People etc.",
+      "pt": "Remove aplicativos pré-instalados como Solitaire, Pessoas etc."
+     },
+     "items": [
+      {
+       "id": "appx:*Microsoft.3DBuilder*",
+       "title": {
+        "en": "3D Builder",
+        "pt": "3D Builder"
+       },
+       "commands": [
+        "Write-Host '-- Removing 3D Builder' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.3DBuilder*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.Microsoft3DViewer*",
+       "title": {
+        "en": "3D Viewer",
+        "pt": "3D Viewer"
+       },
+       "commands": [
+        "Write-Host '-- Removing 3D Viewer' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.Microsoft3DViewer*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.AppConnector*",
+       "title": {
+        "en": "App Connector",
+        "pt": "App Connector"
+       },
+       "commands": [
+        "Write-Host '-- Removing App Connector' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.AppConnector*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.BingFoodAndDrink*",
+       "title": {
+        "en": "Bing Food & Drink",
+        "pt": "Bing Food & Drink"
+       },
+       "commands": [
+        "Write-Host '-- Removing Bing Food & Drink' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.BingFoodAndDrink*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.BingHealthAndFitness*",
+       "title": {
+        "en": "Bing Health & Fitness",
+        "pt": "Bing Health & Fitness"
+       },
+       "commands": [
+        "Write-Host '-- Removing Bing Health & Fitness' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.BingHealthAndFitness*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*BingSearch*",
+       "title": {
+        "en": "Bing Search",
+        "pt": "Bing Search"
+       },
+       "commands": [
+        "Write-Host '-- Removing Bing Search' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*BingSearch*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.BingTranslator*",
+       "title": {
+        "en": "Bing Translator",
+        "pt": "Bing Translator"
+       },
+       "commands": [
+        "Write-Host '-- Removing Bing Translator' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.BingTranslator*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.BingTravel*",
+       "title": {
+        "en": "Bing Travel",
+        "pt": "Bing Travel"
+       },
+       "commands": [
+        "Write-Host '-- Removing Bing Travel' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.BingTravel*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Clipchamp.Clipchamp*",
+       "title": {
+        "en": "Clipchamp",
+        "pt": "Clipchamp"
+       },
+       "commands": [
+        "Write-Host '-- Removing Clipchamp' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Clipchamp.Clipchamp*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.WindowsAlarms*",
+       "title": {
+        "en": "Clock (Alarms & Clock)",
+        "pt": "Clock (Alarms & Clock)"
+       },
+       "commands": [
+        "Write-Host '-- Removing Clock (Alarms & Clock)' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.WindowsAlarms*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.WindowsFeedbackHub*",
+       "title": {
+        "en": "Feedback Hub",
+        "pt": "Feedback Hub"
+       },
+       "commands": [
+        "Write-Host '-- Removing Feedback Hub' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.WindowsFeedbackHub*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.GetHelp*",
+       "title": {
+        "en": "Get Help",
+        "pt": "Get Help"
+       },
+       "commands": [
+        "Write-Host '-- Removing Get Help' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.GetHelp*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.Getstarted*",
+       "title": {
+        "en": "Get Started",
+        "pt": "Get Started"
+       },
+       "commands": [
+        "Write-Host '-- Removing Get Started' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.Getstarted*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.ZuneMusic*",
+       "title": {
+        "en": "Groove Music",
+        "pt": "Groove Music"
+       },
+       "commands": [
+        "Write-Host '-- Removing Groove Music' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.ZuneMusic*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.GroupMe10*",
+       "title": {
+        "en": "GroupMe",
+        "pt": "GroupMe"
+       },
+       "commands": [
+        "Write-Host '-- Removing GroupMe' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.GroupMe10*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*microsoft.windowscommunicationsapps*",
+       "title": {
+        "en": "Mail and Calendar",
+        "pt": "Mail and Calendar"
+       },
+       "commands": [
+        "Write-Host '-- Removing Mail and Calendar' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*microsoft.windowscommunicationsapps*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.MicrosoftOfficeHub*",
+       "title": {
+        "en": "Microsoft 365 (Office Hub)",
+        "pt": "Microsoft 365 (Office Hub)"
+       },
+       "commands": [
+        "Write-Host '-- Removing Microsoft 365 (Office Hub)' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.MicrosoftOfficeHub*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*MicrosoftCorporationII.MicrosoftFamily*",
+       "title": {
+        "en": "Microsoft Family Safety",
+        "pt": "Microsoft Family Safety"
+       },
+       "commands": [
+        "Write-Host '-- Removing Microsoft Family Safety' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*MicrosoftCorporationII.MicrosoftFamily*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.Office.Lens*",
+       "title": {
+        "en": "Microsoft Lens",
+        "pt": "Microsoft Lens"
+       },
+       "commands": [
+        "Write-Host '-- Removing Microsoft Lens' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.Office.Lens*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.WindowsSoundRecorder*",
+       "title": {
+        "en": "Microsoft Messaging",
+        "pt": "Microsoft Messaging"
+       },
+       "commands": [
+        "Write-Host '-- Removing Microsoft Messaging' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.WindowsSoundRecorder*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.News*",
+       "title": {
+        "en": "Microsoft News",
+        "pt": "Microsoft News"
+       },
+       "commands": [
+        "Write-Host '-- Removing Microsoft News' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.News*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.People*",
+       "title": {
+        "en": "Microsoft People",
+        "pt": "Microsoft People"
+       },
+       "commands": [
+        "Write-Host '-- Removing Microsoft People' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.People*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.MicrosoftSolitaireCollection*",
+       "title": {
+        "en": "Microsoft Solitaire Collection",
+        "pt": "Microsoft Solitaire Collection"
+       },
+       "commands": [
+        "Write-Host '-- Removing Microsoft Solitaire Collection' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.MicrosoftSolitaireCollection*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*MSTeams*",
+       "title": {
+        "en": "Microsoft Teams",
+        "pt": "Microsoft Teams"
+       },
+       "commands": [
+        "Write-Host '-- Removing Microsoft Teams' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*MSTeams*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.Todos*",
+       "title": {
+        "en": "Microsoft To Do",
+        "pt": "Microsoft To Do"
+       },
+       "commands": [
+        "Write-Host '-- Removing Microsoft To Do' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.Todos*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.Wallet*",
+       "title": {
+        "en": "Microsoft Wallet",
+        "pt": "Microsoft Wallet"
+       },
+       "commands": [
+        "Write-Host '-- Removing Microsoft Wallet' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.Wallet*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.Whiteboard*",
+       "title": {
+        "en": "Microsoft Whiteboard",
+        "pt": "Microsoft Whiteboard"
+       },
+       "commands": [
+        "Write-Host '-- Removing Microsoft Whiteboard' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.Whiteboard*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.MinecraftUWP*",
+       "title": {
+        "en": "Minecraft (Bedrock Edition)",
+        "pt": "Minecraft (Bedrock Edition)"
+       },
+       "commands": [
+        "Write-Host '-- Removing Minecraft (Bedrock Edition)' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.MinecraftUWP*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.MixedReality.Portal*",
+       "title": {
+        "en": "Mixed Reality Portal",
+        "pt": "Mixed Reality Portal"
+       },
+       "commands": [
+        "Write-Host '-- Removing Mixed Reality Portal' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.MixedReality.Portal*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.BingFinance*",
+       "title": {
+        "en": "MSN Money",
+        "pt": "MSN Money"
+       },
+       "commands": [
+        "Write-Host '-- Removing MSN Money' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.BingFinance*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.BingNews*",
+       "title": {
+        "en": "MSN News",
+        "pt": "MSN News"
+       },
+       "commands": [
+        "Write-Host '-- Removing MSN News' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.BingNews*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.BingSports*",
+       "title": {
+        "en": "MSN Sports",
+        "pt": "MSN Sports"
+       },
+       "commands": [
+        "Write-Host '-- Removing MSN Sports' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.BingSports*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.BingWeather*",
+       "title": {
+        "en": "MSN Weather",
+        "pt": "MSN Weather"
+       },
+       "commands": [
+        "Write-Host '-- Removing MSN Weather' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.BingWeather*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.Office.OneNote*",
+       "title": {
+        "en": "OneNote",
+        "pt": "OneNote"
+       },
+       "commands": [
+        "Write-Host '-- Removing OneNote' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.Office.OneNote*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.OutlookForWindows*",
+       "title": {
+        "en": "Outlook for Windows",
+        "pt": "Outlook for Windows"
+       },
+       "commands": [
+        "Write-Host '-- Removing Outlook for Windows' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.OutlookForWindows*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.OneConnect*",
+       "title": {
+        "en": "Paid Wi-Fi & Cellular",
+        "pt": "Paid Wi-Fi & Cellular"
+       },
+       "commands": [
+        "Write-Host '-- Removing Paid Wi-Fi & Cellular' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.OneConnect*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.MSPaint*",
+       "title": {
+        "en": "Paint",
+        "pt": "Paint"
+       },
+       "commands": [
+        "Write-Host '-- Removing Paint' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.MSPaint*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.CommsPhone*",
+       "title": {
+        "en": "Phone",
+        "pt": "Phone"
+       },
+       "commands": [
+        "Write-Host '-- Removing Phone' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.CommsPhone*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.YourPhone*",
+       "title": {
+        "en": "Phone Link",
+        "pt": "Phone Link"
+       },
+       "commands": [
+        "Write-Host '-- Removing Phone Link' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.YourPhone*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.Print3D*",
+       "title": {
+        "en": "Print 3D",
+        "pt": "Print 3D"
+       },
+       "commands": [
+        "Write-Host '-- Removing Print 3D' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.Print3D*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*QuickAssist*",
+       "title": {
+        "en": "Quick Assist",
+        "pt": "Quick Assist"
+       },
+       "commands": [
+        "Write-Host '-- Removing Quick Assist' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*QuickAssist*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.SkypeApp*",
+       "title": {
+        "en": "Skype",
+        "pt": "Skype"
+       },
+       "commands": [
+        "Write-Host '-- Removing Skype' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.SkypeApp*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.MicrosoftStickyNotes*",
+       "title": {
+        "en": "Sticky Notes",
+        "pt": "Sticky Notes"
+       },
+       "commands": [
+        "Write-Host '-- Removing Sticky Notes' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.MicrosoftStickyNotes*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.Office.Sway*",
+       "title": {
+        "en": "Sway",
+        "pt": "Sway"
+       },
+       "commands": [
+        "Write-Host '-- Removing Sway' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.Office.Sway*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*UserExperienceImprovementProgram*",
+       "title": {
+        "en": "Windows User Experience Improvement Program",
+        "pt": "Windows User Experience Improvement Program"
+       },
+       "commands": [
+        "Write-Host '-- Removing Windows User Experience Improvement Program' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*UserExperienceImprovementProgram*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.WindowsMaps*",
+       "title": {
+        "en": "Windows Maps",
+        "pt": "Windows Maps"
+       },
+       "commands": [
+        "Write-Host '-- Removing Windows Maps' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.WindowsMaps*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.WindowsPhone*",
+       "title": {
+        "en": "Windows Phone Companion",
+        "pt": "Windows Phone Companion"
+       },
+       "commands": [
+        "Write-Host '-- Removing Windows Phone Companion' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.WindowsPhone*\" | Remove-AppxPackage"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "debloat-thirdparty",
+     "title": {
+      "en": "Remove Third-Party Apps",
+      "pt": "Remover Aplicativos de Terceiros"
+     },
+     "desc": {
+      "en": "Removes 3rd-party apps like Shazam, Spotify etc.",
+      "pt": "Remove aplicativos de terceiros como Shazam, Spotify etc."
+     },
+     "items": [
+      {
+       "id": "appx:*ACGMediaPlayer*",
+       "title": {
+        "en": "ACG Media Player",
+        "pt": "ACG Media Player"
+       },
+       "commands": [
+        "Write-Host '-- Removing ACG Media Player' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*ACGMediaPlayer*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*ActiproSoftwareLLC*",
+       "title": {
+        "en": "Actipro Software",
+        "pt": "Actipro Software"
+       },
+       "commands": [
+        "Write-Host '-- Removing Actipro Software' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*ActiproSoftwareLLC*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*AdobePhotoshopExpress*",
+       "title": {
+        "en": "Adobe Photoshop Express",
+        "pt": "Adobe Photoshop Express"
+       },
+       "commands": [
+        "Write-Host '-- Removing Adobe Photoshop Express' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*AdobePhotoshopExpress*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*BubbleWitch3Saga*",
+       "title": {
+        "en": "Bubble Witch 3 Saga",
+        "pt": "Bubble Witch 3 Saga"
+       },
+       "commands": [
+        "Write-Host '-- Removing Bubble Witch 3 Saga' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*BubbleWitch3Saga*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*CandyCrush*",
+       "title": {
+        "en": "Candy Crush",
+        "pt": "Candy Crush"
+       },
+       "commands": [
+        "Write-Host '-- Removing Candy Crush' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*CandyCrush*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*DropboxOEM*",
+       "title": {
+        "en": "Dropbox",
+        "pt": "Dropbox"
+       },
+       "commands": [
+        "Write-Host '-- Removing Dropbox' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*DropboxOEM*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Duolingo-LearnLanguagesforFree*",
+       "title": {
+        "en": "Duolingo",
+        "pt": "Duolingo"
+       },
+       "commands": [
+        "Write-Host '-- Removing Duolingo' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Duolingo-LearnLanguagesforFree*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*EclipseManager*",
+       "title": {
+        "en": "Eclipse Manager",
+        "pt": "Eclipse Manager"
+       },
+       "commands": [
+        "Write-Host '-- Removing Eclipse Manager' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*EclipseManager*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Facebook*",
+       "title": {
+        "en": "Facebook",
+        "pt": "Facebook"
+       },
+       "commands": [
+        "Write-Host '-- Removing Facebook' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Facebook*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Flipboard*",
+       "title": {
+        "en": "Flipboard",
+        "pt": "Flipboard"
+       },
+       "commands": [
+        "Write-Host '-- Removing Flipboard' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Flipboard*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*HiddenCity*",
+       "title": {
+        "en": "Hidden City",
+        "pt": "Hidden City"
+       },
+       "commands": [
+        "Write-Host '-- Removing Hidden City' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*HiddenCity*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Hulu*",
+       "title": {
+        "en": "Hulu",
+        "pt": "Hulu"
+       },
+       "commands": [
+        "Write-Host '-- Removing Hulu' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Hulu*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*ClearChannelRadioDigital.iHeartRadio*",
+       "title": {
+        "en": "iHeartRadio",
+        "pt": "iHeartRadio"
+       },
+       "commands": [
+        "Write-Host '-- Removing iHeartRadio' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*ClearChannelRadioDigital.iHeartRadio*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*LinkedInForWindows*",
+       "title": {
+        "en": "LinkedIn",
+        "pt": "LinkedIn"
+       },
+       "commands": [
+        "Write-Host '-- Removing LinkedIn' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*LinkedInForWindows*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*McAfee*",
+       "title": {
+        "en": "McAfee",
+        "pt": "McAfee"
+       },
+       "commands": [
+        "Write-Host '-- Removing McAfee' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*McAfee*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Netflix*",
+       "title": {
+        "en": "Netflix",
+        "pt": "Netflix"
+       },
+       "commands": [
+        "Write-Host '-- Removing Netflix' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Netflix*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*OneCalendar*",
+       "title": {
+        "en": "OneCalendar",
+        "pt": "OneCalendar"
+       },
+       "commands": [
+        "Write-Host '-- Removing OneCalendar' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*OneCalendar*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*PandoraMediaInc*",
+       "title": {
+        "en": "Pandora",
+        "pt": "Pandora"
+       },
+       "commands": [
+        "Write-Host '-- Removing Pandora' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*PandoraMediaInc*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*RandomSaladGamesLLC*",
+       "title": {
+        "en": "Random Salad Games",
+        "pt": "Random Salad Games"
+       },
+       "commands": [
+        "Write-Host '-- Removing Random Salad Games' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*RandomSaladGamesLLC*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Royal Revolt*",
+       "title": {
+        "en": "Royal Revolt",
+        "pt": "Royal Revolt"
+       },
+       "commands": [
+        "Write-Host '-- Removing Royal Revolt' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Royal Revolt*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*ShazamEntertainmentLtd.Shazam*",
+       "title": {
+        "en": "Shazam",
+        "pt": "Shazam"
+       },
+       "commands": [
+        "Write-Host '-- Removing Shazam' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*ShazamEntertainmentLtd.Shazam*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Speed Test*",
+       "title": {
+        "en": "Speed Test",
+        "pt": "Speed Test"
+       },
+       "commands": [
+        "Write-Host '-- Removing Speed Test' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Speed Test*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*SpotifyAB.SpotifyMusic*",
+       "title": {
+        "en": "Spotify",
+        "pt": "Spotify"
+       },
+       "commands": [
+        "Write-Host '-- Removing Spotify' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*SpotifyAB.SpotifyMusic*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Sway*",
+       "title": {
+        "en": "Sway",
+        "pt": "Sway"
+       },
+       "commands": [
+        "Write-Host '-- Removing Sway' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Sway*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Twitter*",
+       "title": {
+        "en": "Twitter",
+        "pt": "Twitter"
+       },
+       "commands": [
+        "Write-Host '-- Removing Twitter' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Twitter*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Viber*",
+       "title": {
+        "en": "Viber",
+        "pt": "Viber"
+       },
+       "commands": [
+        "Write-Host '-- Removing Viber' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Viber*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Wunderlist*",
+       "title": {
+        "en": "Wunderlist",
+        "pt": "Wunderlist"
+       },
+       "commands": [
+        "Write-Host '-- Removing Wunderlist' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Wunderlist*\" | Remove-AppxPackage"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "debloat-extensions",
+     "title": {
+      "en": "Remove Extensions",
+      "pt": "Remover Extensões"
+     },
+     "desc": {
+      "en": "Removes pre-installed extensions like HEVC, VP9 etc.",
+      "pt": "Remove extensões pré-instaladas como HEVC, VP9 etc."
+     },
+     "items": [
+      {
+       "id": "appx:*Microsoft.HEIFImageExtension*",
+       "title": {
+        "en": "HEIF Image Extension",
+        "pt": "HEIF Image Extension"
+       },
+       "commands": [
+        "Write-Host '-- Removing HEIF Image Extension' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.HEIFImageExtension*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.HEVCVideoExtension*",
+       "title": {
+        "en": "HEVC Video Extension",
+        "pt": "HEVC Video Extension"
+       },
+       "commands": [
+        "Write-Host '-- Removing HEVC Video Extension' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.HEVCVideoExtension*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.VP9VideoExtensions*",
+       "title": {
+        "en": "VP9 Video Extensions",
+        "pt": "VP9 Video Extensions"
+       },
+       "commands": [
+        "Write-Host '-- Removing VP9 Video Extensions' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.VP9VideoExtensions*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.RawImageExtension*",
+       "title": {
+        "en": "Raw Image Extension",
+        "pt": "Raw Image Extension"
+       },
+       "commands": [
+        "Write-Host '-- Removing Raw Image Extension' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.RawImageExtension*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.WebpImageExtension*",
+       "title": {
+        "en": "WebP Image Extension",
+        "pt": "WebP Image Extension"
+       },
+       "commands": [
+        "Write-Host '-- Removing WebP Image Extension' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.WebpImageExtension*\" | Remove-AppxPackage"
+       ]
+      },
+      {
+       "id": "appx:*Microsoft.WebMediaExtensions*",
+       "title": {
+        "en": "Web Media Extensions",
+        "pt": "Web Media Extensions"
+       },
+       "commands": [
+        "Write-Host '-- Removing Web Media Extensions' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.WebMediaExtensions*\" | Remove-AppxPackage"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "xbox",
+     "title": {
+      "en": "Remove Xbox",
+      "pt": "Remover Xbox"
+     },
+     "desc": {
+      "en": "Uninstalls pre-installed Xbox apps and components.",
+      "pt": "Desinstala aplicativos e componentes pré-instalados do Xbox."
+     },
+     "items": [
+      {
+       "id": "xbox",
+       "title": {
+        "en": "Remove Xbox",
+        "pt": "Remover Xbox"
+       },
+       "commands": [
+        "Write-Host '-- Uninstalling Xbox' -ForegroundColor Magenta",
+        "@(\"Microsoft.XboxApp\",\"Microsoft.Xbox.TCUI\",\"Microsoft.XboxGamingOverlay\",\"Microsoft.XboxGameOverlay\",\"Microsoft.XboxIdentityProvider\",\"Microsoft.XboxSpeechToTextOverlay\",\"Microsoft.GamingApp\") | ForEach-Object { $pkg = Get-AppxPackage $_ -AllUsers; if ($pkg) { $pkg | Remove-AppxPackage -AllUsers; Write-Host \"Removed: $_\" } }",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Appx\\AppxAllUserStore\\Deprovisioned\\Microsoft.XboxSpeechToTextOverlay_8wekyb3d8bbwe\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Appx\\AppxAllUserStore\\Deprovisioned\\Microsoft.Xbox.TCUI_8wekyb3d8bbwe\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Appx\\AppxAllUserStore\\Deprovisioned\\Microsoft.XboxApp_8wekyb3d8bbwe\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Appx\\AppxAllUserStore\\Deprovisioned\\Microsoft.XboxGamingOverlay_8wekyb3d8bbwe\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Appx\\AppxAllUserStore\\Deprovisioned\\Microsoft.XboxGameOverlay_8wekyb3d8bbwe\" /f",
+        "Set-Service -Name \"XblAuthManager\" -StartupType Manual",
+        "Set-Service -Name \"XblGameSave\" -StartupType Manual",
+        "Set-Service -Name \"XboxGipSvc\" -StartupType Manual",
+        "Set-Service -Name \"XboxNetApiSvc\" -StartupType Manual"
+       ],
+       "desc": {
+        "en": "Uninstalls pre-installed Xbox apps and components.",
+        "pt": "Desinstala aplicativos e componentes pré-instalados do Xbox."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "microsoftstore",
+     "title": {
+      "en": "Remove Microsoft Store",
+      "pt": "Remover Microsoft Store"
+     },
+     "desc": {
+      "en": "You will no longer be able to manage apps from the Microsoft Store.",
+      "pt": "Não será mais possível gerenciar aplicativos pela Microsoft Store."
+     },
+     "items": [
+      {
+       "id": "microsoftstore",
+       "title": {
+        "en": "Remove Microsoft Store",
+        "pt": "Remover Microsoft Store"
+       },
+       "commands": [
+        "Write-Host '-- Uninstalling Microsoft Store' -ForegroundColor Magenta",
+        "Get-AppxPackage \"*Microsoft.WindowsStore*\" | Remove-AppxPackage"
+       ],
+       "desc": {
+        "en": "You will no longer be able to manage apps from the Microsoft Store.",
+        "pt": "Não será mais possível gerenciar aplicativos pela Microsoft Store."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "msstoreupdates",
+     "title": {
+      "en": "Disable Automatic App Updates",
+      "pt": "Desativar Atualizações Automáticas de Aplicativos"
+     },
+     "desc": {
+      "en": "Stops automatic Microsoft Store apps updates.",
+      "pt": "Impede as atualizações automáticas de aplicativos da Microsoft Store."
+     },
+     "items": [
+      {
+       "id": "msstoreupdates",
+       "title": {
+        "en": "Disable Automatic App Updates",
+        "pt": "Desativar Atualizações Automáticas de Aplicativos"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Microsoft Store App Updates' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\WindowsStore\" /v \"AutoDownload\" /t REG_DWORD /d 2 /f"
+       ],
+       "desc": {
+        "en": "Stops automatic Microsoft Store apps updates.",
+        "pt": "Impede as atualizações automáticas de aplicativos da Microsoft Store."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "onedrive",
+     "title": {
+      "en": "Remove OneDrive",
+      "pt": "Remover OneDrive"
+     },
+     "desc": {
+      "en": "Be sure to backup your files before removing it.",
+      "pt": "Certifique-se de fazer backup dos seus arquivos antes de removê-lo."
+     },
+     "items": [
+      {
+       "id": "onedrive",
+       "title": {
+        "en": "Remove OneDrive",
+        "pt": "Remover OneDrive"
+       },
+       "commands": [
+        "Write-Host \"-- Uninstalling OneDrive\" -ForegroundColor Magenta",
+        "Stop-Process -Name OneDrive,FileCoAuth -Force",
+        "$onedriveUninstaller = \"$env:SystemRoot\\System32\\OneDriveSetup.exe\"",
+        "if (Test-Path $onedriveUninstaller) {",
+        "    Start-Process -FilePath $onedriveUninstaller -ArgumentList \"/uninstall\" -Wait",
+        "}",
+        "Remove-Item -Path \"Registry::HKEY_CLASSES_ROOT\\WOW6432Node\\CLSID\\{018D5C66-4533-4307-9B53-224DE2ED1FE6}\" -Recurse -Force",
+        "Remove-Item -Path \"Registry::HKEY_CLASSES_ROOT\\CLSID\\{018D5C66-4533-4307-9B53-224DE2ED1FE6}\" -Recurse -Force",
+        "Remove-Item \"$env:APPDATA\\Microsoft\\Windows\\Start Menu\\Programs\\OneDrive*.lnk\" -Force",
+        "Remove-Item \"$env:ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\OneDrive*.lnk\" -Force",
+        "Get-ScheduledTask -TaskPath '\\' -TaskName 'OneDrive*' | Unregister-ScheduledTask -Confirm:$false",
+        "Remove-Item -Path \"$env:LOCALAPPDATA\\OneDrive\" -Recurse -Force",
+        "Remove-Item -Path \"$env:LOCALAPPDATA\\Microsoft\\OneDrive\" -Recurse -Force",
+        "Remove-Item -Path \"$env:ProgramData\\Microsoft OneDrive\" -Recurse -Force",
+        "Remove-Item -Path \"$env:SystemDrive\\OneDriveTemp\" -Recurse -Force",
+        "Remove-Item -Path \"HKCU:\\Software\\Microsoft\\OneDrive\" -Recurse -Force"
+       ],
+       "desc": {
+        "en": "Be sure to backup your files before removing it.",
+        "pt": "Certifique-se de fazer backup dos seus arquivos antes de removê-lo."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "debloatedge",
+     "title": {
+      "en": "Debloat Edge",
+      "pt": "Debloat Edge"
+     },
+     "desc": {
+      "en": "Disables Edge bloatware, telemetry, and promotional features.",
+      "pt": "Desativa o bloatware, a telemetria e os recursos promocionais do Edge."
+     },
+     "items": [
+      {
+       "id": "debloatedge",
+       "title": {
+        "en": "Debloat Edge",
+        "pt": "Debloat Edge"
+       },
+       "commands": [
+        "Write-Host '-- Debloating Edge' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"EdgeEnhanceImagesEnabled\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"PersonalizationReportingEnabled\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"ShowRecommendationsEnabled\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"HideFirstRunExperience\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"UserFeedbackAllowed\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"ConfigureDoNotTrack\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"AlternateErrorPagesEnabled\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"EdgeCollectionsEnabled\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"EdgeFollowEnabled\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"EdgeShoppingAssistantEnabled\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"MicrosoftEdgeInsiderPromotionEnabled\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"RelatedMatchesCloudServiceEnabled\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"ShowMicrosoftRewards\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"WebWidgetAllowed\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"MetricsReportingEnabled\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"StartupBoostEnabled\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"BingAdsSuppression\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"NewTabPageHideDefaultTopSites\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"PromotionalTabsEnabled\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"SendSiteInfoToImproveServices\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"SpotlightExperiencesAndRecommendationsEnabled\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"DiagnosticData\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"EdgeAssetDeliveryServiceEnabled\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"CryptoWalletEnabled\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"WalletDonationEnabled\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"HubsSidebarEnabled\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"CopilotPageAction\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"CopilotCDPPageContext\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"CopilotPageContext\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"Microsoft365CopilotChatIconEnabled\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"EdgeEntraCopilotPageContext\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"EdgeHistoryAISearchEnabled\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"ComposeInlineEnabled\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"NewTabPageBingChatEnabled\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"NewTabPageContentEnabled\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"TabServicesEnabled\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"DefaultBrowserSettingEnabled\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Edge\" /v \"ShowAcrobatSubscriptionButton\" /t \"REG_DWORD\" /d \"0\" /f"
+       ],
+       "desc": {
+        "en": "Disables Edge bloatware, telemetry, and promotional features.",
+        "pt": "Desativa o bloatware, a telemetria e os recursos promocionais do Edge."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "edge",
+     "title": {
+      "en": "Remove Edge",
+      "pt": "Remover Edge"
+     },
+     "desc": {
+      "en": "Uninstalls the Edge Chromium browser.",
+      "pt": "Desinstala o navegador Edge Chromium."
+     },
+     "items": [
+      {
+       "id": "edge",
+       "title": {
+        "en": "Remove Edge",
+        "pt": "Remover Edge"
+       },
+       "commands": [
+        "Write-Host '-- Uninstalling Edge' -ForegroundColor Magenta",
+        "$Path = (Get-ChildItem \"$env:SystemDrive\\Program Files (x86)\\Microsoft\\Edge\\Application\\*\\Installer\\setup.exe\")[0].FullName",
+        "New-Item \"$env:SystemDrive\\Windows\\SystemApps\\Microsoft.MicrosoftEdge_8wekyb3d8bbwe\\MicrosoftEdge.exe\" -Force | Out-Null",
+        "Start-Process $Path -ArgumentList '--uninstall --system-level --force-uninstall --delete-profile'"
+       ],
+       "desc": {
+        "en": "Uninstalls the Edge Chromium browser.",
+        "pt": "Desinstala o navegador Edge Chromium."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "debloatbrave",
+     "title": {
+      "en": "Debloat Brave",
+      "pt": "Debloat Brave"
+     },
+     "desc": {
+      "en": "Disables Brave Rewards, AI, and Crypto Wallet.",
+      "pt": "Desativa o Brave Rewards, a IA e a carteira de criptomoedas."
+     },
+     "items": [
+      {
+       "id": "debloatbrave",
+       "title": {
+        "en": "Debloat Brave",
+        "pt": "Debloat Brave"
+       },
+       "commands": [
+        "Write-Host '-- Debloating Brave' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\BraveSoftware\\Brave\" /v \"BraveRewardsDisabled\" /t \"REG_DWORD\" /d \"1\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\BraveSoftware\\Brave\" /v \"BraveWalletDisabled\" /t \"REG_DWORD\" /d \"1\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\BraveSoftware\\Brave\" /v \"BraveAIChatEnabled\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\BraveSoftware\\Brave\" /v \"BraveStatsPingEnabled\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\BraveSoftware\\Brave\" /v \"BraveNewsDisabled\" /t \"REG_DWORD\" /d \"1\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\BraveSoftware\\Brave\" /v \"BraveTalkDisabled\" /t \"REG_DWORD\" /d \"1\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\BraveSoftware\\Brave\" /v \"BravePlaylistEnabled\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\BraveSoftware\\Brave\" /v \"BraveSpeedreaderEnabled\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\BraveSoftware\\Brave\" /v \"BraveWaybackMachineEnabled\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\BraveSoftware\\Brave\" /v \"TorDisabled\" /t \"REG_DWORD\" /d \"1\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\BraveSoftware\\Brave\" /v \"IPFSEnabled\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\BraveSoftware\\Brave\" /v \"BraveP3AEnabled\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\BraveSoftware\\Brave\" /v \"BraveWebDiscoveryEnabled\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\BraveSoftware\\Brave\" /v \"GenAILocalFoundationalModelSettings\" /t \"REG_DWORD\" /d \"1\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\BraveSoftware\\Brave\" /v \"DevToolsGenAiSettings\" /t \"REG_DWORD\" /d \"1\" /f"
+       ],
+       "desc": {
+        "en": "Disables Brave Rewards, AI, and Crypto Wallet.",
+        "pt": "Desativa o Brave Rewards, a IA e a carteira de criptomoedas."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "widgets",
+     "title": {
+      "en": "Remove Widgets",
+      "pt": "Remover Widgets"
+     },
+     "desc": {
+      "en": "Removes the Web Experience package.",
+      "pt": "Remove o pacote Web Experience."
+     },
+     "items": [
+      {
+       "id": "widgets",
+       "title": {
+        "en": "Remove Widgets",
+        "pt": "Remover Widgets"
+       },
+       "commands": [
+        "Write-Host '-- Uninstalling Widgets' -ForegroundColor Magenta",
+        "Get-AppxPackage *WebExperience* | Remove-AppxPackage",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Appx\\AppxAllUserStore\\Deprovisioned\\MicrosoftWindows.Client.WebExperience_cw5n1h2txyewy\" /f"
+       ],
+       "desc": {
+        "en": "Removes the Web Experience package.",
+        "pt": "Remove o pacote Web Experience."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "taskbarwidgets",
+     "title": {
+      "en": "Remove Taskbar Widgets",
+      "pt": "Remover Widgets da Barra de Tarefas"
+     },
+     "desc": {
+      "en": "Disables taskbar widgets such as Task View, Weather etc.",
+      "pt": "Desativa widgets da barra de tarefas como Visualização de Tarefas, Clima etc."
+     },
+     "items": [
+      {
+       "id": "taskbarwidgets",
+       "title": {
+        "en": "Remove Taskbar Widgets",
+        "pt": "Remover Widgets da Barra de Tarefas"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Taskbar Widgets' -ForegroundColor Magenta",
+        "reg add \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" /v \"ShowTaskViewButton\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Dsh\" /v \"AllowNewsAndInterests\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\PolicyManager\\default\\NewsAndInterests\\AllowNewsAndInterests\" /v \"value\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Feeds\" /v \"EnableFeeds\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent\" /v \"DisableCloudOptimizedContent\" /t REG_DWORD /d 1 /f"
+       ],
+       "desc": {
+        "en": "Disables taskbar widgets such as Task View, Weather etc.",
+        "pt": "Desativa widgets da barra de tarefas como Visualização de Tarefas, Clima etc."
+       }
+      }
+     ],
+     "single": true
+    }
+   ]
+  },
+  {
+   "id": "privacy",
+   "title": {
+    "en": "Privacy",
+    "pt": "Privacidade"
+   },
+   "groups": [
+    {
+     "id": "appaccess",
+     "title": {
+      "en": "Disable App Access",
+      "pt": "Desativar Acesso de Aplicativos"
+     },
+     "desc": {
+      "en": "Limit app access to data, files and system.",
+      "pt": "Limita o acesso de aplicativos a dados, arquivos e sistema."
+     },
+     "items": [
+      {
+       "id": "locationaccess",
+       "title": {
+        "en": "Disable App Access to Location",
+        "pt": "Desativar Acesso de Aplicativos à Localização"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Location access' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\location\" /v \"Value\" /d \"Deny\" /f"
+       ]
+      },
+      {
+       "id": "cameraccess",
+       "title": {
+        "en": "Disable App Access to Camera",
+        "pt": "Desativar Acesso de Aplicativos à Câmera"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Camera access' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\webcam\" /v \"Value\" /d \"Deny\" /t REG_SZ /f"
+       ]
+      },
+      {
+       "id": "microphoneaccess",
+       "title": {
+        "en": "Disable App Access to Microphone",
+        "pt": "Desativar Acesso de Aplicativos ao Microfone"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Microphone access' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\microphone\" /v \"Value\" /d \"Deny\" /t REG_SZ /f"
+       ]
+      },
+      {
+       "id": "systemaccess",
+       "title": {
+        "en": "Disable App Access to File System",
+        "pt": "Desativar Acesso de Aplicativos ao Sistema de Arquivos"
+       },
+       "commands": [
+        "Write-Host '-- Disabling System files access' -ForegroundColor Magenta",
+        "reg add \"HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\documentsLibrary\" /v \"Value\" /d \"Deny\" /t REG_SZ /f",
+        "reg add \"HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\picturesLibrary\" /v \"Value\" /d \"Deny\" /t REG_SZ /f",
+        "reg add \"HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\videosLibrary\" /v \"Value\" /d \"Deny\" /t REG_SZ /f",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\broadFileSystemAccess\" /v \"Value\" /d \"Deny\" /t REG_SZ /f"
+       ]
+      },
+      {
+       "id": "accinfoaccess",
+       "title": {
+        "en": "Disable App Access to Account Information",
+        "pt": "Desativar Acesso de Aplicativos às Informações da Conta"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Account Information access' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\userAccountInformation\" /v \"Value\" /d \"Deny\" /f"
+       ]
+      },
+      {
+       "id": "contactsaccess",
+       "title": {
+        "en": "Disable App Access to your Contacts",
+        "pt": "Desativar Acesso de Aplicativos aos Contatos"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Contacts access' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\contacts\" /v \"Value\" /d \"Deny\" /t REG_SZ /f"
+       ]
+      },
+      {
+       "id": "callhistoryaccess",
+       "title": {
+        "en": "Disable App Access to your Call History",
+        "pt": "Desativar Acesso de Aplicativos ao Histórico de Chamadas"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Call History access' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\phoneCallHistory\" /v \"Value\" /d \"Deny\" /t REG_SZ /f"
+       ]
+      },
+      {
+       "id": "messagingaccess",
+       "title": {
+        "en": "Disable App Access to your Messages",
+        "pt": "Desativar Acesso de Aplicativos às Mensagens"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Messaging access' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\chat\" /v \"Value\" /d \"Deny\" /t REG_SZ /f"
+       ]
+      },
+      {
+       "id": "notificationaccess",
+       "title": {
+        "en": "Disable App Access to Notifications",
+        "pt": "Desativar Acesso de Aplicativos às Notificações"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Notification access' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\userNotificationListener\" /v \"Value\" /d \"Deny\" /t REG_SZ /f"
+       ]
+      },
+      {
+       "id": "emailaccess",
+       "title": {
+        "en": "Disable App Access to Email",
+        "pt": "Desativar Acesso de Aplicativos ao E-mail"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Email access' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\email\" /v \"Value\" /d \"Deny\" /t REG_SZ /f"
+       ]
+      },
+      {
+       "id": "tasksaccess",
+       "title": {
+        "en": "Disable App Access to Tasks",
+        "pt": "Desativar Acesso de Aplicativos às Tarefas"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Tasks access' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\userDataTasks\" /v \"Value\" /d \"Deny\" /t REG_SZ /f"
+       ]
+      },
+      {
+       "id": "diagaccess",
+       "title": {
+        "en": "Disable App Access to Diagnostic Data",
+        "pt": "Desativar Acesso de Aplicativos aos Dados de Diagnóstico"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Diagnostics access' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\appDiagnostics\" /v \"Value\" /d \"Deny\" /t REG_SZ /f"
+       ]
+      },
+      {
+       "id": "voiceactivationaccess",
+       "title": {
+        "en": "Disable App Access to Voice Activation",
+        "pt": "Desativar Acesso de Aplicativos à Ativação por Voz"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Voice Activation access' -ForegroundColor Magenta",
+        "reg add \"HKCU\\Software\\Microsoft\\Speech_OneCore\\Settings\\VoiceActivation\\UserPreferenceForAllApps\" /v \"AgentActivationEnabled\" /t REG_DWORD /d 0 /f"
+       ]
+      },
+      {
+       "id": "phoneaccess",
+       "title": {
+        "en": "Disable App Access to Phone",
+        "pt": "Desativar Acesso de Aplicativos ao Telefone"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Phone access' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\AppPrivacy\" /v \"LetAppsAccessPhone\" /t REG_DWORD /d 2 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\AppPrivacy\" /v \"LetAppsAccessPhone_UserInControlOfTheseApps\" /t REG_MULTI_SZ /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\AppPrivacy\" /v \"LetAppsAccessPhone_ForceAllowTheseApps\" /t REG_MULTI_SZ /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\AppPrivacy\" /v \"LetAppsAccessPhone_ForceDenyTheseApps\" /t REG_MULTI_SZ /f"
+       ]
+      },
+      {
+       "id": "trustedaccess",
+       "title": {
+        "en": "Disable App Access to Trusted Devices",
+        "pt": "Desativar Acesso de Aplicativos a Dispositivos Confiáveis"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Trusted Devices access' -ForegroundColor Magenta",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DeviceAccess\\Global\\{C1D23ACC-752B-43E5-8448-8D0E519CD6D6}\" /t REG_SZ /v \"Value\" /d \"Deny\" /f"
+       ]
+      },
+      {
+       "id": "calendaraccess",
+       "title": {
+        "en": "Disable App Access to Calendar",
+        "pt": "Desativar Acesso de Aplicativos ao Calendário"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Calendar access' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\appointments\" /v \"Value\" /d \"Deny\" /t REG_SZ /f"
+       ]
+      },
+      {
+       "id": "motionaccess",
+       "title": {
+        "en": "Disable App Access to Motion Data",
+        "pt": "Desativar Acesso de Aplicativos aos Dados de Movimento"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Motion access' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\activity\" /v \"Value\" /d \"Deny\" /f"
+       ]
+      },
+      {
+       "id": "radioaccess",
+       "title": {
+        "en": "Disable App Access to Radios",
+        "pt": "Desativar Acesso de Aplicativos aos Rádios"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Radio access' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\radios\" /v \"Value\" /d \"Deny\" /t REG_SZ /f"
+       ]
+      },
+      {
+       "id": "recordingsaccess",
+       "title": {
+        "en": "Disable App Access to Recordings",
+        "pt": "Desativar Acesso de Aplicativos às Gravações"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Recordings access' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\graphicsCaptureProgrammatic\" /v \"Value\" /d \"Deny\" /t REG_SZ /f"
+       ]
+      },
+      {
+       "id": "screenshotborderaccess",
+       "title": {
+        "en": "Disable App Access to Screenshot Borders",
+        "pt": "Desativar Acesso de Aplicativos às Bordas de Captura de Tela"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Screenshot Borders access' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\graphicsCaptureWithoutBorder\" /v \"Value\" /d \"Deny\" /t REG_SZ /f"
+       ]
+      },
+      {
+       "id": "aigenerationaccess",
+       "title": {
+        "en": "Disable App Access to AI Generation",
+        "pt": "Desativar Acesso de Aplicativos à Geração de IA"
+       },
+       "commands": [
+        "Write-Host '-- Disabling AI Generation access' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\systemAIModels\" /v \"Value\" /d \"Deny\" /t REG_SZ /f"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "updatepause",
+     "title": {
+      "en": "Extend Windows Update Pause Limit",
+      "pt": "Estender Limite de Pausa do Windows Update"
+     },
+     "desc": {
+      "en": "Extends Windows Update pause limit to 20 years.",
+      "pt": "Estende o limite de pausa do Windows Update para 20 anos."
+     },
+     "items": [
+      {
+       "id": "updatepause",
+       "title": {
+        "en": "Extend Windows Update Pause Limit",
+        "pt": "Estender Limite de Pausa do Windows Update"
+       },
+       "commands": [
+        "Write-Host '-- Extend Windows Update Pause Limit to 20 years' -ForegroundColor Magenta",
+        "Write-Host \"-- NOTE: This does not disable updates by itself, user needs to pause updates in Windows Settings.\" -ForegroundColor Yellow",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\WindowsUpdate\\UX\\Settings\" /v \"FlightSettingsMaxPauseDays\" /t REG_DWORD /d 7300 /f"
+       ],
+       "desc": {
+        "en": "Extends Windows Update pause limit to 20 years.",
+        "pt": "Estende o limite de pausa do Windows Update para 20 anos."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "wpbt",
+     "title": {
+      "en": "Disable Windows Platform Binary Table",
+      "pt": "Desativar Windows Platform Binary Table"
+     },
+     "desc": {
+      "en": "WPBT allows your computer vendor to install and execute software without user consent.",
+      "pt": "A WPBT permite que o fabricante do computador instale e execute software sem o consentimento do usuário."
+     },
+     "items": [
+      {
+       "id": "wpbt",
+       "title": {
+        "en": "Disable Windows Platform Binary Table",
+        "pt": "Desativar Windows Platform Binary Table"
+       },
+       "commands": [
+        "Write-Host '-- Disable Windows Platform Binary Table' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\" /v \"DisableWpbtExecution\" /t REG_DWORD /d 1 /f"
+       ],
+       "desc": {
+        "en": "WPBT allows your computer vendor to install and execute software without user consent.",
+        "pt": "A WPBT permite que o fabricante do computador instale e execute software sem o consentimento do usuário."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "backgroundapps",
+     "title": {
+      "en": "Disable Microsoft Store Background Apps",
+      "pt": "Disable Microsoft Store Background Apps"
+     },
+     "desc": {
+      "en": "Prevents Microsoft Store apps from running in the background.",
+      "pt": "Prevents Microsoft Store apps from running in the background."
+     },
+     "items": [
+      {
+       "id": "backgroundapps",
+       "title": {
+        "en": "Disable Microsoft Store Background Apps",
+        "pt": "Disable Microsoft Store Background Apps"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Microsoft Store Background Apps' -ForegroundColor Magenta",
+        "reg add \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications\" /v \"GlobalUserDisabled\" /t REG_DWORD /d \"1\" /f"
+       ],
+       "desc": {
+        "en": "Prevents Microsoft Store apps from running in the background.",
+        "pt": "Prevents Microsoft Store apps from running in the background."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "bitlocker",
+     "title": {
+      "en": "Disable Bitlocker Drive Encryption",
+      "pt": "Disable Bitlocker Drive Encryption"
+     },
+     "desc": {
+      "en": "Disables Bitlocker automatic drive encryption.",
+      "pt": "Disables Bitlocker automatic drive encryption."
+     },
+     "items": [
+      {
+       "id": "bitlocker",
+       "title": {
+        "en": "Disable Bitlocker Drive Encryption",
+        "pt": "Disable Bitlocker Drive Encryption"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Bitlocker Drive Encryption' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SYSTEM\\CurrentControlSet\\Control\\BitLocker\" /v \"PreventDeviceEncryption\" /t REG_DWORD /d 1 /f",
+        "Disable-BitLocker -MountPoint $Env:SystemDrive -ErrorAction SilentlyContinue"
+       ],
+       "desc": {
+        "en": "Disables Bitlocker automatic drive encryption.",
+        "pt": "Disables Bitlocker automatic drive encryption."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "cloudsync",
+     "title": {
+      "en": "Disable Cloud Sync",
+      "pt": "Desativar Sincronização na Nuvem"
+     },
+     "desc": {
+      "en": "Disables cloud syncing of settings, themes, and passwords.",
+      "pt": "Desativa a sincronização na nuvem de configurações, temas e senhas."
+     },
+     "items": [
+      {
+       "id": "cloudsync",
+       "title": {
+        "en": "Disable Cloud Sync",
+        "pt": "Desativar Sincronização na Nuvem"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Cloud Sync' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\SettingSync\" /v \"DisableSettingSync\" /t REG_DWORD /d 2 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\SettingSync\" /v \"DisableSettingSyncUserOverride\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\SettingSync\" /v \"DisableSyncOnPaidNetwork\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync\" /v \"SyncPolicy\" /t REG_DWORD /d 5 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\SettingSync\" /v \"DisableApplicationSettingSync\" /t REG_DWORD /d 2 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\SettingSync\" /v \"DisableApplicationSettingSyncUserOverride\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\SettingSync\" /v \"DisableAppSyncSettingSync\" /t REG_DWORD /d 2 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\SettingSync\" /v \"DisableAppSyncSettingSyncUserOverride\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\SettingSync\" /v \"DisableCredentialsSettingSync\" /t REG_DWORD /d 2 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\SettingSync\" /v \"DisableCredentialsSettingSyncUserOverride\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync\\Groups\\Credentials\" /v \"Enabled\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\SettingSync\" /v \"DisableDesktopThemeSettingSync\" /t REG_DWORD /d 2 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\SettingSync\" /v \"DisableDesktopThemeSettingSyncUserOverride\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\SettingSync\" /v \"DisablePersonalizationSettingSync\" /t REG_DWORD /d 2 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\SettingSync\" /v \"DisablePersonalizationSettingSyncUserOverride\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\SettingSync\" /v \"DisableStartLayoutSettingSync\" /t REG_DWORD /d 2 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\SettingSync\" /v \"DisableStartLayoutSettingSyncUserOverride\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\SettingSync\" /v \"DisableWebBrowserSettingSync\" /t REG_DWORD /d 2 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\SettingSync\" /v \"DisableWebBrowserSettingSyncUserOverride\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\SettingSync\" /v \"DisableWebBrowserSettingSync\" /t REG_DWORD /d 2 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\SettingSync\" /v \"DisableWebBrowserSettingSyncUserOverride\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\SettingSync\" /v \"DisableWindowsSettingSync\" /t REG_DWORD /d 2 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\SettingSync\" /v \"DisableWindowsSettingSyncUserOverride\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync\\Groups\\Language\" /t REG_DWORD /v \"Enabled\" /d 0 /f"
+       ],
+       "desc": {
+        "en": "Disables cloud syncing of settings, themes, and passwords.",
+        "pt": "Desativa a sincronização na nuvem de configurações, temas e senhas."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "activityfeed",
+     "title": {
+      "en": "Disable Activity History",
+      "pt": "Desativar Histórico de Atividades"
+     },
+     "desc": {
+      "en": "Disables the Activity Feed and timeline history.",
+      "pt": "Desativa o feed de atividades e o histórico da linha do tempo."
+     },
+     "items": [
+      {
+       "id": "activityfeed",
+       "title": {
+        "en": "Disable Activity History",
+        "pt": "Desativar Histórico de Atividades"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Activity Feed' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System\" /v \"EnableActivityFeed\" /d \"0\" /t REG_DWORD /f"
+       ],
+       "desc": {
+        "en": "Disables the Activity Feed and timeline history.",
+        "pt": "Desativa o feed de atividades e o histórico da linha do tempo."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "notificationtray",
+     "title": {
+      "en": "Disable Notifications Tray",
+      "pt": "Desativar Bandeja de Notificações"
+     },
+     "desc": {
+      "en": "Disables the notifications center in the taskbar.",
+      "pt": "Desativa a central de notificações na barra de tarefas."
+     },
+     "items": [
+      {
+       "id": "notificationtray",
+       "title": {
+        "en": "Disable Notifications Tray",
+        "pt": "Desativar Bandeja de Notificações"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Notification Tray' -ForegroundColor Magenta",
+        "reg add \"HKCU\\Software\\Policies\\Microsoft\\Windows\\Explorer\" /v \"DisableNotificationCenter\" /d \"1\" /t REG_DWORD /f"
+       ],
+       "desc": {
+        "en": "Disables the notifications center in the taskbar.",
+        "pt": "Desativa a central de notificações na barra de tarefas."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "automap",
+     "title": {
+      "en": "Disable Automatic Map Downloads",
+      "pt": "Desativar Downloads Automáticos de Mapas"
+     },
+     "desc": {
+      "en": "Disables automatic offline map downloads and updates.",
+      "pt": "Desativa o download e as atualizações automáticas de mapas offline."
+     },
+     "items": [
+      {
+       "id": "automap",
+       "title": {
+        "en": "Disable Automatic Map Downloads",
+        "pt": "Desativar Downloads Automáticos de Mapas"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Auto Map Downloads' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Maps\" /v \"AllowUntriggeredNetworkTrafficOnSettingsPage\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Maps\" /v \"AutoDownloadAndUpdateMapData\" /t REG_DWORD /d 0 /f"
+       ],
+       "desc": {
+        "en": "Disables automatic offline map downloads and updates.",
+        "pt": "Desativa o download e as atualizações automáticas de mapas offline."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "default0user",
+     "title": {
+      "en": "Remove User 'default0'",
+      "pt": "Remover Usuário 'default0'"
+     },
+     "desc": {
+      "en": "Removes the default0 user created at the OOBE stage.",
+      "pt": "Remove o usuário 'default0' criado na fase OOBE."
+     },
+     "items": [
+      {
+       "id": "default0user",
+       "title": {
+        "en": "Remove User 'default0'",
+        "pt": "Remover Usuário 'default0'"
+       },
+       "commands": [
+        "Write-Host '-- Deleting Default0 User' -ForegroundColor Magenta",
+        "Remove-LocalUser -Name \"defaultuser0\""
+       ],
+       "desc": {
+        "en": "Removes the default0 user created at the OOBE stage.",
+        "pt": "Remove o usuário 'default0' criado na fase OOBE."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "lockscreencamera",
+     "title": {
+      "en": "Disable Lockscreen Camera",
+      "pt": "Desativar Câmera na Tela de Bloqueio"
+     },
+     "desc": {
+      "en": "Disables camera access from the lock screen.",
+      "pt": "Desativa o acesso à câmera a partir da tela de bloqueio."
+     },
+     "items": [
+      {
+       "id": "lockscreencamera",
+       "title": {
+        "en": "Disable Lockscreen Camera",
+        "pt": "Desativar Câmera na Tela de Bloqueio"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Lock Screen Camera' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Personalization\" /v \"NoLockScreenCamera\" /t REG_DWORD /d 1 /f"
+       ],
+       "desc": {
+        "en": "Disables camera access from the lock screen.",
+        "pt": "Desativa o acesso à câmera a partir da tela de bloqueio."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "biometrics",
+     "title": {
+      "en": "Disable Biometrics",
+      "pt": "Desativar Biometria"
+     },
+     "desc": {
+      "en": "Disables biometrics, breaks Windows Hello and fingerprint.",
+      "pt": "Desativa a biometria, interrompendo o Windows Hello e o leitor de impressão digital."
+     },
+     "items": [
+      {
+       "id": "biometrics",
+       "title": {
+        "en": "Disable Biometrics",
+        "pt": "Desativar Biometria"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Biometrics (Breaks Windows Hello)' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Biometrics\" /v \"Enabled\" /t REG_DWORD /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Biometrics\\Credential Provider\" /v \"Enabled\" /t \"REG_DWORD\" /d \"0\" /f"
+       ],
+       "desc": {
+        "en": "Disables biometrics, breaks Windows Hello and fingerprint.",
+        "pt": "Desativa a biometria, interrompendo o Windows Hello e o leitor de impressão digital."
+       }
+      }
+     ],
+     "single": true
+    }
+   ]
+  },
+  {
+   "id": "telemetry",
+   "title": {
+    "en": "Telemetry",
+    "pt": "Telemetria"
+   },
+   "groups": [
+    {
+     "id": "windowstelemetry",
+     "title": {
+      "en": "Disable Telemetry",
+      "pt": "Desativar Telemetria"
+     },
+     "desc": {
+      "en": "Choose what data is sent to Microsoft.",
+      "pt": "Escolha quais dados são enviados para a Microsoft."
+     },
+     "items": [
+      {
+       "id": "wtelemetry",
+       "title": {
+        "en": "Disable Windows Telemetry",
+        "pt": "Desativar Telemetria do Windows"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Windows Telemetry' -ForegroundColor Magenta",
+        "Disable-ScheduledTask -TaskName \"\\Microsoft\\Windows\\Customer Experience Improvement Program\\Consolidator\" -ErrorAction SilentlyContinue",
+        "Disable-ScheduledTask -TaskName \"\\Microsoft\\Windows\\Customer Experience Improvement Program\\KernelCeipTask\" -ErrorAction SilentlyContinue",
+        "Disable-ScheduledTask -TaskName \"\\Microsoft\\Windows\\Customer Experience Improvement Program\\UsbCeip\" -ErrorAction SilentlyContinue",
+        "Disable-ScheduledTask -TaskName \"\\Microsoft\\Windows\\Autochk\\Proxy\" -ErrorAction SilentlyContinue",
+        "Disable-ScheduledTask -TaskName \"\\Microsoft\\Windows\\DiskDiagnostic\\Microsoft-Windows-DiskDiagnosticDataCollector\" -ErrorAction SilentlyContinue",
+        "Disable-ScheduledTask -TaskName \"\\Microsoft\\Windows\\Feedback\\Siuf\\DmClient\" -ErrorAction SilentlyContinue",
+        "Disable-ScheduledTask -TaskName \"\\Microsoft\\Windows\\Feedback\\Siuf\\DmClientOnScenarioDownload\" -ErrorAction SilentlyContinue",
+        "Disable-ScheduledTask -TaskName \"\\Microsoft\\Windows\\Windows Error Reporting\\QueueReporting\" -ErrorAction SilentlyContinue",
+        "Disable-ScheduledTask -TaskName \"\\Microsoft\\Windows\\Maps\\MapsUpdateTask\" -ErrorAction SilentlyContinue",
+        "Set-Service -Name \"DiagTrack\" -StartupType Manual",
+        "Set-Service -Name \"diagsvc\" -StartupType Manual",
+        "Set-Service -Name \"WerSvc\" -StartupType Manual",
+        "Set-Service -Name \"wercplsupport\" -StartupType Manual",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection\" /v \"AllowDesktopAnalyticsProcessing\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection\" /v \"AllowDeviceNameInTelemetry\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection\" /v \"MicrosoftEdgeDataOptIn\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection\" /v \"AllowWUfBCloudProcessing\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection\" /v \"AllowUpdateComplianceProcessing\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection\" /v \"AllowCommercialDataPipeline\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection\" /v \"AllowTelemetry\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\Software\\Policies\\Microsoft\\Windows\\DataCollection\" /v \"DisableOneSettingsDownloads\" /t \"REG_DWORD\" /d \"1\" /f",
+        "reg add \"HKLM\\Software\\Policies\\Microsoft\\SQMClient\\Windows\" /v \"CEIPEnable\" /t REG_DWORD /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\DataCollection\" /v \"AllowTelemetry\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\Software\\Policies\\Microsoft\\Windows NT\\CurrentVersion\\Software Protection Platform\" /v \"NoGenTicket\" /t \"REG_DWORD\" /d \"1\" /f",
+        "reg add \"HKLM\\Software\\Policies\\Microsoft\\Windows\\Windows Error Reporting\" /v \"Disabled\" /t REG_DWORD /d \"1\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\Windows Error Reporting\" /v \"Disabled\" /t \"REG_DWORD\" /d \"1\" /f",
+        "reg add \"HKLM\\Software\\Microsoft\\Windows\\Windows Error Reporting\\Consent\" /v \"DefaultConsent\" /t REG_DWORD /d \"0\" /f",
+        "reg add \"HKLM\\Software\\Microsoft\\Windows\\Windows Error Reporting\\Consent\" /v \"DefaultOverrideBehavior\" /t REG_DWORD /d \"1\" /f",
+        "reg add \"HKLM\\Software\\Microsoft\\Windows\\Windows Error Reporting\" /v \"DontSendAdditionalData\" /t REG_DWORD /d \"1\" /f",
+        "reg add \"HKLM\\Software\\Microsoft\\Windows\\Windows Error Reporting\" /v \"LoggingDisabled\" /t REG_DWORD /d \"1\" /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager\" /v \"ContentDeliveryAllowed\" /d \"0\" /t REG_DWORD /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager\" /v \"SubscribedContentEnabled\" /d \"0\" /t REG_DWORD /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager\" /v \"OemPreInstalledAppsEnabled\" /d \"0\" /t REG_DWORD /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager\" /v \"PreInstalledAppsEnabled\" /d \"0\" /t REG_DWORD /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager\" /v \"PreInstalledAppsEverEnabled\" /d \"0\" /t REG_DWORD /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager\" /v \"SilentInstalledAppsEnabled\" /d \"0\" /t REG_DWORD /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager\" /v \"SystemPaneSuggestionsEnabled\" /d \"0\" /t REG_DWORD /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager\" /v \"FeatureManagementEnabled\" /d \"0\" /t REG_DWORD /f",
+        "reg add \"HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\SystemSettings\\AccountNotifications\" /v \"EnableAccountNotifications\" /t REG_DWORD /d \"0\" /f",
+        "reg add \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\SystemSettings\\AccountNotifications\" /v \"EnableAccountNotifications\" /t REG_DWORD /d \"0\" /f",
+        "reg add \"HKCU\\Software\\Policies\\Microsoft\\Windows\\EdgeUI\" /v \"DisableMFUTracking\" /t REG_DWORD /d \"1\" /f",
+        "reg add \"HKCU\\Control Panel\\International\\User Profile\" /v \"HttpAcceptLanguageOptOut\" /t REG_DWORD /d \"1\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System\" /v \"PublishUserActivities\" /t REG_DWORD /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\System\" /v \"UploadUserActivities\" /t REG_DWORD /d \"0\" /f",
+        "reg add \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" /v \"Start_TrackProgs\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Personalization\\Settings\" /v \"AcceptedPrivacyPolicy\" /t REG_DWORD /d 0 /f"
+       ]
+      },
+      {
+       "id": "wsearchtelemetry",
+       "title": {
+        "en": "Disable Windows Search Telemetry",
+        "pt": "Desativar Telemetria da Pesquisa do Windows"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Windows Search Telemetry' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search\" /v \"ConnectedSearchPrivacy\" /t REG_DWORD /d \"3\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search\" /v \"AllowSearchToUseLocation\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search\" /v \"EnableDynamicContentInWSB\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search\" /v \"ConnectedSearchUseWeb\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search\" /v \"DisableWebSearch\" /t \"REG_DWORD\" /d \"1\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search\" /v \"PreventUnwantedAddIns\" /t \"REG_SZ\" /d \" \" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search\" /v \"PreventRemoteQueries\" /t REG_DWORD /d \"1\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search\" /v \"AlwaysUseAutoLangDetection\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search\" /v \"AllowIndexingEncryptedStoresOrItems\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search\" /v \"ConnectedSearchUseWebOverMeteredConnections\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search\" /v \"AllowCloudSearch\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search\" /v \"AllowCortana\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Explorer\" /v \"DisableSearchBoxSuggestions\" /t \"REG_DWORD\" /d \"1\" /f",
+        "reg add \"HKLM\\Software\\Policies\\Microsoft\\Windows\\Explorer\" /v \"DisableSearchHistory\" /t REG_DWORD /d \"1\" /f",
+        "reg add \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" /v \"Start_IrisRecommendations\" /t REG_DWORD /d \"0\" /f",
+        "reg add \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\SearchSettings\" /v \"IsDynamicSearchBoxEnabled\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SearchSettings\" /v \"IsMSACloudSearchEnabled\" /t REG_DWORD /d \"0\" /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SearchSettings\" /v \"IsAADCloudSearchEnabled\" /t REG_DWORD /d \"0\" /f",
+        "reg add \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\SearchSettings\" /v \"IsDeviceSearchHistoryEnabled\" /t REG_DWORD /d \"0\" /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Search\" /v \"BingSearchEnabled\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Search\" /v \"VoiceShortcut\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Search\" /v \"DeviceHistoryEnabled\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Search\" /v \"HistoryViewEnabled\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Search\" /v \"CortanaEnabled\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Search\" /v \"AllowCortana\" /t \"REG_DWORD\" /d \"0\" /f"
+       ]
+      },
+      {
+       "id": "officetelemetry",
+       "title": {
+        "en": "Disable Office Telemetry",
+        "pt": "Desativar Telemetria do Office"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Office telemetry' -ForegroundColor Magenta",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Office\\15.0\\Outlook\\Options\\Mail\" /v \"EnableLogging\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Office\\16.0\\Outlook\\Options\\Mail\" /v \"EnableLogging\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Office\\15.0\\Outlook\\Options\\Calendar\" /v \"EnableCalendarLogging\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Office\\16.0\\Outlook\\Options\\Calendar\" /v \"EnableCalendarLogging\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Office\\15.0\\Word\\Options\" /v \"EnableLogging\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Office\\16.0\\Word\\Options\" /v \"EnableLogging\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\SOFTWARE\\Policies\\Microsoft\\Office\\15.0\\OSM\" /v \"EnableLogging\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\SOFTWARE\\Policies\\Microsoft\\Office\\16.0\\OSM\" /v \"EnableLogging\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\SOFTWARE\\Policies\\Microsoft\\Office\\15.0\\OSM\" /v \"EnableUpload\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\SOFTWARE\\Policies\\Microsoft\\Office\\16.0\\OSM\" /v \"EnableUpload\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Office\\Common\\ClientTelemetry\" /v \"DisableTelemetry\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Office\\16.0\\Common\\ClientTelemetry\" /v \"DisableTelemetry\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Office\\Common\\ClientTelemetry\" /v \"VerboseLogging\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Office\\16.0\\Common\\ClientTelemetry\" /v \"VerboseLogging\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Office\\15.0\\Common\" /v \"QMEnable\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Office\\16.0\\Common\" /v \"QMEnable\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Office\\15.0\\Common\\Feedback\" /v \"Enabled\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Office\\16.0\\Common\\Feedback\" /v \"Enabled\" /t REG_DWORD /d 0 /f",
+        "Disable-ScheduledTask -TaskName \"\\Microsoft\\Office\\OfficeTelemetryAgentFallBack\" -ErrorAction SilentlyContinue",
+        "Disable-ScheduledTask -TaskName \"\\Microsoft\\Office\\OfficeTelemetryAgentLogOn\" -ErrorAction SilentlyContinue",
+        "Disable-ScheduledTask -TaskName \"\\Microsoft\\Office\\OfficeTelemetryAgentFallBack2016\" -ErrorAction SilentlyContinue",
+        "Disable-ScheduledTask -TaskName \"\\Microsoft\\Office\\OfficeTelemetryAgentLogOn2016\" -ErrorAction SilentlyContinue",
+        "Disable-ScheduledTask -TaskName \"\\Microsoft\\Office\\Office 15 Subscription Heartbeat\" -ErrorAction SilentlyContinue",
+        "Disable-ScheduledTask -TaskName \"\\Microsoft\\Office\\Office 16 Subscription Heartbeat\" -ErrorAction SilentlyContinue"
+       ]
+      },
+      {
+       "id": "appexperience",
+       "title": {
+        "en": "Disable Application Experience Data Collection",
+        "pt": "Desativar Coleta de Dados de Experiência do Aplicativo"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Application Experience telemetry' -ForegroundColor Magenta",
+        "Disable-ScheduledTask -TaskName \"\\Microsoft\\Windows\\Application Experience\\Microsoft Compatibility Appraiser\" -ErrorAction SilentlyContinue",
+        "Disable-ScheduledTask -TaskName \"\\Microsoft\\Windows\\Application Experience\\Microsoft Compatibility Appraiser Exp\" -ErrorAction SilentlyContinue",
+        "Disable-ScheduledTask -TaskName \"\\Microsoft\\Windows\\Application Experience\\StartupAppTask\" -ErrorAction SilentlyContinue",
+        "Disable-ScheduledTask -TaskName \"\\Microsoft\\Windows\\Application Experience\\PcaPatchDbTask\" -ErrorAction SilentlyContinue",
+        "Disable-ScheduledTask -TaskName \"\\Microsoft\\Windows\\Application Experience\\MareBackup\" -ErrorAction SilentlyContinue"
+       ]
+      },
+      {
+       "id": "wfeedback",
+       "title": {
+        "en": "Disable Feedback Data Collection",
+        "pt": "Desativar Coleta de Dados de Feedback"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Windows Feedback Experience telemetry' -ForegroundColor Magenta",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Siuf\\Rules\" /v \"NumberOfSIUFInPeriod\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\DataCollection\" /v \"DoNotShowFeedbackNotifications\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection\" /v \"DoNotShowFeedbackNotifications\" /t REG_DWORD /d 1 /f"
+       ]
+      },
+      {
+       "id": "handwriting",
+       "title": {
+        "en": "Disable Handwriting Data Collection",
+        "pt": "Desativar Coleta de Dados de Escrita à Mão"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Handwriting telemetry' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\InputPersonalization\" /v \"RestrictImplicitInkCollection\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\InputPersonalization\" /v \"RestrictImplicitTextCollection\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKLM\\Software\\Policies\\Microsoft\\Windows\\HandwritingErrorReports\" /v \"PreventHandwritingErrorReports\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\TabletPC\" /v \"PreventHandwritingDataSharing\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\InputPersonalization\" /v \"AllowInputPersonalization\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\InputPersonalization\\TrainedDataStore\" /v \"HarvestContacts\" /t REG_DWORD /d 0 /f"
+       ]
+      },
+      {
+       "id": "windowsdrm",
+       "title": {
+        "en": "Disable Internet Access for Windows DRM",
+        "pt": "Desativar Acesso à Internet para DRM do Windows"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Internet Access to Windows DRM' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\WMDRM\" /v \"DisableOnline\" /t REG_DWORD /d 1 /f"
+       ]
+      },
+      {
+       "id": "cloudbasedspeech",
+       "title": {
+        "en": "Disable Cloud-Based Speech Recognition",
+        "pt": "Desativar Reconhecimento de Voz Baseado em Nuvem"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Cloud Based Speech Recognition' -ForegroundColor Magenta",
+        "reg add \"HKCU\\Software\\Microsoft\\Speech_OneCore\\Settings\\OnlineSpeechPrivacy\" /v \"HasAccepted\" /t REG_DWORD /d 0 /f"
+       ]
+      },
+      {
+       "id": "targetads",
+       "title": {
+        "en": "Disable Targeted Ads",
+        "pt": "Desativar Anúncios Direcionados"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Targeted Ads and Data Collection' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\CloudContent\" /v \"DisableSoftLanding\" /t REG_DWORD /d \"1\" /f",
+        "reg add \"HKLM\\Software\\Policies\\Microsoft\\Windows\\CloudContent\" /v \"DisableWindowsSpotlightFeatures\" /t \"REG_DWORD\" /d \"1\" /f",
+        "reg add \"HKLM\\Software\\Policies\\Microsoft\\Windows\\CloudContent\" /v \"DisableWindowsConsumerFeatures\" /t \"REG_DWORD\" /d \"1\" /f",
+        "reg add \"HKLM\\Software\\Policies\\Microsoft\\Windows\\CloudContent\" /v \"DisableTailoredExperiencesWithDiagnosticData\" /t \"REG_DWORD\" /d \"1\" /f",
+        "reg add \"HKCU\\Software\\Policies\\Microsoft\\Windows\\CloudContent\" /v \"DisableTailoredExperiencesWithDiagnosticData\" /t \"REG_DWORD\" /d \"1\" /f",
+        "reg add \"HKCU\\Software\\Policies\\Microsoft\\Windows\\CloudContent\" /v \"TailoredExperiencesWithDiagnosticDataEnabled\" /t \"REG_DWORD\" /d \"0\" /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" /v \"ShowSyncProviderNotifications\" /t REG_DWORD /d \"0\" /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AdvertisingInfo\" /v \"Enabled\" /t REG_DWORD /d \"0\" /f",
+        "reg add \"HKCU\\SOFTWARE\\Policies\\Microsoft\\Windows\\AdvertisingInfo\" /v \"DisabledByGroupPolicy\" /t REG_DWORD /d \"1\" /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager\" /v \"RotatingLockScreenEnabled\" /t REG_DWORD /d \"0\" /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager\" /v \"RotatingLockScreenOverlayEnabled\" /t REG_DWORD /d \"0\" /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager\" /v \"SoftLandingEnabled\" /t REG_DWORD /d \"0\" /f",
+        "reg add \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager\" /v \"SubscribedContent-338393Enabled\" /d \"0\" /t REG_DWORD /f",
+        "reg add \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager\" /v \"SubscribedContent-353694Enabled\" /d \"0\" /t REG_DWORD /f",
+        "reg add \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager\" /v \"SubscribedContent-353696Enabled\" /d \"0\" /t REG_DWORD /f",
+        "reg add \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager\" /v \"SubscribedContent-338387Enabled\" /d \"0\" /t REG_DWORD /f",
+        "reg add \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager\" /v \"SubscribedContent-338388Enabled\" /d \"0\" /t REG_DWORD /f",
+        "reg add \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager\" /v \"SubscribedContent-338389Enabled\" /d \"0\" /t REG_DWORD /f",
+        "reg add \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager\" /v \"SubscribedContent-353698Enabled\" /d \"0\" /t REG_DWORD /f"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "3rdpartytelemetry",
+     "title": {
+      "en": "Disable 3rd-Party Telemetry",
+      "pt": "Desativar Telemetria de Terceiros"
+     },
+     "desc": {
+      "en": "Choose what data is sent to 3rd-party software.",
+      "pt": "Escolha quais dados são enviados para softwares de terceiros."
+     },
+     "items": [
+      {
+       "id": "adobetelemetry",
+       "title": {
+        "en": "Block Adobe Network",
+        "pt": "Bloquear Rede Adobe"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Adobe Telemetry' -ForegroundColor Magenta",
+        "try {",
+        "    Invoke-WebRequest -Uri \"https://a.dove.isdumb.one/list.txt\" -OutFile \"$env:TEMP\\list.txt\" -ErrorAction Stop",
+        "    Write-Host \"Adobe block entries successfully added to hosts file\"",
+        "    Get-Content \"$env:TEMP\\list.txt\" | Add-Content -Path \"$env:windir\\System32\\drivers\\etc\\hosts\"",
+        "    Remove-Item \"$env:TEMP\\list.txt\" -Force",
+        "}",
+        "catch {",
+        "    Write-Host \"-- Failed to download the list from the specified URL.\" -ForegroundColor Red",
+        "}"
+       ]
+      },
+      {
+       "id": "nvidiatelemetry",
+       "title": {
+        "en": "Disable Nvidia Telemetry",
+        "pt": "Desativar Telemetria da Nvidia"
+       },
+       "commands": [
+        "Write-Host '-- Disabling NVIDIA telemetry' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\NVIDIA Corporation\\NvControlPanel2\\Client\" /v \"OptInOrOutPreference\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\NVIDIA Corporation\\Global\\FTS\" /v \"EnableRID44231\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\NVIDIA Corporation\\Global\\FTS\" /v \"EnableRID64640\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\NVIDIA Corporation\\Global\\FTS\" /v \"EnableRID66610\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SYSTEM\\CurrentControlSet\\Services\\nvlddmkm\\Global\\Startup\" /v \"SendTelemetryData\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SYSTEM\\CurrentControlSet\\Services\\nvlddmkm\\Parameters\\Global\\Startup\\SendTelemetryData\" /ve /t REG_DWORD /d 0 /f",
+        "Disable-ScheduledTask -TaskName \"NvTmMon_{B2FE1952-0186-46C3-BAEC-A80AA35AC5B8}\" -ErrorAction SilentlyContinue",
+        "Disable-ScheduledTask -TaskName \"NvTmRep_{B2FE1952-0186-46C3-BAEC-A80AA35AC5B8}\" -ErrorAction SilentlyContinue",
+        "Disable-ScheduledTask -TaskName \"NvTmRepOnLogon_{B2FE1952-0186-46C3-BAEC-A80AA35AC5B8}\" -ErrorAction SilentlyContinue",
+        "Set-Service -Name \"NvTelemetryContainer\" -StartupType Disabled"
+       ]
+      },
+      {
+       "id": "vscodetelemetry",
+       "title": {
+        "en": "Disable VS Code Telemetry",
+        "pt": "Desativar Telemetria do VS Code"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Visual Studio telemetry' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Wow6432Node\\Microsoft\\VSCommon\\14.0\\SQM\" /v \"OptIn\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Wow6432Node\\Microsoft\\VSCommon\\15.0\\SQM\" /v \"OptIn\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Wow6432Node\\Microsoft\\VSCommon\\16.0\\SQM\" /v \"OptIn\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Wow6432Node\\Microsoft\\VSCommon\\17.0\\SQM\" /v \"OptIn\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\Software\\Policies\\Microsoft\\VisualStudio\\SQM\" /v \"OptIn\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\Software\\Microsoft\\VisualStudio\\Telemetry\" /v \"TurnOffSwitch\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\VisualStudio\\Feedback\" /v \"DisableFeedbackDialog\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\VisualStudio\\Feedback\" /v \"DisableEmailInput\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\VisualStudio\\Feedback\" /v \"DisableScreenshotCapture\" /t REG_DWORD /d 1 /f",
+        "Remove-ItemProperty -Path \"HKLM:\\Software\\Microsoft\\VisualStudio\\DiagnosticsHub\" -Name \"LogLevel\" -Force",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\VisualStudio\\IntelliCode\" /v \"DisableRemoteAnalysis\" /t \"REG_DWORD\" /d \"1\" /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\VSCommon\\16.0\\IntelliCode\" /v \"DisableRemoteAnalysis\" /t \"REG_DWORD\" /d \"1\" /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\VSCommon\\17.0\\IntelliCode\" /v \"DisableRemoteAnalysis\" /t \"REG_DWORD\" /d \"1\" /f"
+       ]
+      },
+      {
+       "id": "mediatelemetry",
+       "title": {
+        "en": "Disable Media Player Telemetry",
+        "pt": "Desativar Telemetria do Media Player"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Media Player telemetry' -ForegroundColor Magenta",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\MediaPlayer\\Preferences\" /v \"UsageTracking\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\Software\\Policies\\Microsoft\\WindowsMediaPlayer\" /v \"PreventCDDVDMetadataRetrieval\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKCU\\Software\\Policies\\Microsoft\\WindowsMediaPlayer\" /v \"PreventMusicFileMetadataRetrieval\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKCU\\Software\\Policies\\Microsoft\\WindowsMediaPlayer\" /v \"PreventRadioPresetsRetrieval\" /t REG_DWORD /d 1 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\WMDRM\" /v \"DisableOnline\" /t REG_DWORD /d 1 /f"
+       ]
+      },
+      {
+       "id": "powershelltelemetry",
+       "title": {
+        "en": "Disable Powershell Telemetry",
+        "pt": "Desativar Telemetria do PowerShell"
+       },
+       "commands": [
+        "Write-Host '-- Disabling PowerShell telemetry' -ForegroundColor Magenta",
+        "setx POWERSHELL_TELEMETRY_OPTOUT 1"
+       ]
+      },
+      {
+       "id": "ccleanertelemetry",
+       "title": {
+        "en": "Disable CCleaner Telemetry",
+        "pt": "Desativar Telemetria do CCleaner"
+       },
+       "commands": [
+        "Write-Host '-- Disabling CCleaner telemetry' -ForegroundColor Magenta",
+        "reg add \"HKCU\\Software\\Piriform\\CCleaner\" /v \"Monitoring\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\Software\\Piriform\\CCleaner\" /v \"HelpImproveCCleaner\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\Software\\Piriform\\CCleaner\" /v \"SystemMonitoring\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\Software\\Piriform\\CCleaner\" /v \"UpdateAuto\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\Software\\Piriform\\CCleaner\" /v \"UpdateCheck\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\Software\\Piriform\\CCleaner\" /v \"CheckTrialOffer\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\Software\\Piriform\\CCleaner\" /v \"(Cfg)HealthCheck\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\Software\\Piriform\\CCleaner\" /v \"(Cfg)QuickClean\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\Software\\Piriform\\CCleaner\" /v \"(Cfg)QuickCleanIpm\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\Software\\Piriform\\CCleaner\" /v \"(Cfg)GetIpmForTrial\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\Software\\Piriform\\CCleaner\" /v \"(Cfg)SoftwareUpdater\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\Software\\Piriform\\CCleaner\" /v \"(Cfg)SoftwareUpdaterIpm\" /t REG_DWORD /d 0 /f"
+       ]
+      },
+      {
+       "id": "googleupdates",
+       "title": {
+        "en": "Disable Google Background Updates",
+        "pt": "Desativar Atualizações em Segundo Plano do Google"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Google updates' -ForegroundColor Magenta",
+        "Set-Service -Name \"gupdate\" -StartupType Disabled",
+        "Set-Service -Name \"gupdatem\" -StartupType Disabled"
+       ]
+      },
+      {
+       "id": "adobeupdates",
+       "title": {
+        "en": "Disable Adobe Background Updates",
+        "pt": "Desativar Atualizações em Segundo Plano da Adobe"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Adobe updates' -ForegroundColor Magenta",
+        "Disable-ScheduledTask -TaskName \"\\Adobe Acrobat Update Task\" -ErrorAction SilentlyContinue",
+        "Set-Service -Name \"AdobeARMservice\" -StartupType Disabled",
+        "Set-Service -Name \"adobeupdateservice\" -StartupType Disabled"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "defaultupdate",
+     "title": {
+      "en": "Manage Windows Updates",
+      "pt": "Gerenciar Atualizações do Windows"
+     },
+     "desc": {
+      "en": "Delay, disable, or reset Windows Updates.",
+      "pt": "Atrasa, desativa ou redefine as atualizações do Windows."
+     },
+     "exclusive": true,
+     "items": [
+      {
+       "id": "defaultupdate",
+       "title": {
+        "en": "Default Settings",
+        "pt": "Configuração Padrão"
+       },
+       "commands": [
+        "Write-Host '-- Restoring default Windows Update settings' -ForegroundColor Magenta",
+        "Remove-Item -Path \"HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate\\AU\" -Recurse -Force",
+        "Remove-Item -Path \"HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DeliveryOptimization\" -Recurse -Force",
+        "Remove-Item -Path \"HKLM:\\SOFTWARE\\Microsoft\\WindowsUpdate\\UX\\Settings\" -Recurse -Force",
+        "Remove-Item -Path \"HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\Device Metadata\" -Recurse -Force",
+        "Remove-Item -Path \"HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\DriverSearching\" -Recurse -Force",
+        "Remove-Item -Path \"HKLM:\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate\" -Recurse -Force",
+        "Write-Host \"Re-enabling WU services\"",
+        "Set-Service -Name \"bits\" -StartupType Manual",
+        "Set-Service -Name \"wuauserv\" -StartupType Manual",
+        "Set-Service -Name \"usosvc\" -StartupType Automatic",
+        "Set-Service -Name \"WaaSMedicSvc\" -StartupType Manual",
+        "Write-Host \"Re-enabling WU scheduled tasks\"",
+        "$paths = @('\\Microsoft\\Windows\\InstallService\\', '\\Microsoft\\Windows\\UpdateOrchestrator\\', '\\Microsoft\\Windows\\UpdateAssistant\\', '\\Microsoft\\Windows\\WaaSMedic\\', '\\Microsoft\\Windows\\WindowsUpdate\\', '\\Microsoft\\WindowsUpdate\\'); foreach ($path in $paths) { Get-ScheduledTask -TaskPath \"$path*\" -ErrorAction SilentlyContinue | Enable-ScheduledTask -ErrorAction SilentlyContinue }",
+        "Write-Host \"Resetting Windows local security policies to default\"",
+        "secedit /configure /cfg \"$Env:SystemRoot\\inf\\defltbase.inf\" /db defltbase.sdb"
+       ],
+       "radioGroup": "telemetry.updates"
+      },
+      {
+       "id": "securityupdate",
+       "title": {
+        "en": "Only Security Updates",
+        "pt": "Somente Atualizações de Segurança"
+       },
+       "commands": [
+        "Write-Host '-- Delaying feature updates by 1 year' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\WindowsUpdate\\UX\\Settings\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\WindowsUpdate\\UX\\Settings\" /v \"BranchReadinessLevel\" /t REG_DWORD /d \"20\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\WindowsUpdate\\UX\\Settings\" /v \"DeferFeatureUpdatesPeriodInDays\" /t REG_DWORD /d \"365\" /f"
+       ],
+       "radioGroup": "telemetry.updates"
+      },
+      {
+       "id": "disableupdate",
+       "title": {
+        "en": "Disable Updates",
+        "pt": "Desativar Atualizações"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Windows Update' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate\\AU\" /v \"NoAutoUpdate\" /t REG_DWORD /d \"1\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate\\AU\" /v \"AUOptions\" /t REG_DWORD /d \"1\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DeliveryOptimization\\Config\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeliveryOptimization\" /v \"DODownloadMode\" /t REG_DWORD /d \"99\" /f",
+        "Write-Host \"Disabling Windows Update Services\"",
+        "$updateServices = @(\"BITS\",\"wuauserv\",\"UsoSvc\",\"WaaSMedicSvc\")",
+        "$updateServices | ForEach-Object { Stop-Service -Name $_; Set-Service -Name $_ -StartupType Disabled }",
+        "Remove-Item -Path \"$env:SystemDrive\\Windows\\SoftwareDistribution\\Download\\*\" -Recurse -Force",
+        "Write-Host \"Disabling Windows Update Scheduled Tasks\"",
+        "$paths = @('\\Microsoft\\Windows\\InstallService\\', '\\Microsoft\\Windows\\UpdateOrchestrator\\', '\\Microsoft\\Windows\\UpdateAssistant\\', '\\Microsoft\\Windows\\WaaSMedic\\', '\\Microsoft\\Windows\\WindowsUpdate\\', '\\Microsoft\\WindowsUpdate\\'); foreach ($path in $paths) { Get-ScheduledTask -TaskPath \"$path*\" -ErrorAction SilentlyContinue | Disable-ScheduledTask -ErrorAction SilentlyContinue }"
+       ],
+       "radioGroup": "telemetry.updates"
+      }
+     ]
+    },
+    {
+     "id": "deliveryoptimization",
+     "title": {
+      "en": "Configure Windows Update",
+      "pt": "Configurar Windows Update"
+     },
+     "desc": {
+      "en": "Configure Windows Update settings.",
+      "pt": "Define as configurações do Windows Update."
+     },
+     "items": [
+      {
+       "id": "deliveryoptimization",
+       "title": {
+        "en": "Disable Delivery Optimization",
+        "pt": "Desativar Otimização de Entrega"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Delivery Optimization' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\DeliveryOptimization\" /v \"DODownloadMode\" /t REG_DWORD /d \"99\" /f"
+       ],
+       "desc": {
+        "en": "Prevents Windows from sending parts of previously downloaded updates to other devices on the internet.",
+        "pt": "Impede que o Windows envie partes de atualizações já baixadas para outros dispositivos na internet."
+       }
+      },
+      {
+       "id": "meteredconnection",
+       "title": {
+        "en": "Disable Updates over Metered Connections",
+        "pt": "Desativar Atualizações em Conexões Limitadas"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Updates over Metered Connections' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\WindowsUpdate\\UX\\Settings\" /v \"AllowAutoWindowsUpdateDownloadOverMeteredNetwork\" /t REG_DWORD /d \"0\" /f"
+       ],
+       "desc": {
+        "en": "Prevents Windows from downloading updates when using data-limited connections.",
+        "pt": "Impede que o Windows baixe atualizações ao usar conexões com dados limitados."
+       }
+      },
+      {
+       "id": "driverupdates",
+       "title": {
+        "en": "Disable Hardware Driver Updates",
+        "pt": "Desativar Atualizações de Drivers de Hardware"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Hardware Driver Updates' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate\" /v \"ExcludeWUDriversInQualityUpdate\" /t REG_DWORD /d \"1\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\WindowsUpdate\\UpdatePolicy\\PolicyState\" /v \"ExcludeWUDrivers\" /t REG_DWORD /d \"1\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DriverSearching\" /v \"SearchOrderConfig\" /t REG_DWORD /d 0 /f"
+       ],
+       "desc": {
+        "en": "Prevents Windows from automatically downloading and installing hardware driver updates.",
+        "pt": "Impede que o Windows baixe e instale atualizações de drivers de hardware automaticamente."
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "gaming",
+   "title": {
+    "en": "Gaming",
+    "pt": "Jogos"
+   },
+   "groups": [
+    {
+     "id": "windowedoptimizations",
+     "title": {
+      "en": "Disable Optimizations for Windowed Games",
+      "pt": "Desativar Otimizações para Jogos em Janela"
+     },
+     "items": [
+      {
+       "id": "windowedoptimizations",
+       "title": {
+        "en": "Disable Optimizations for Windowed Games",
+        "pt": "Desativar Otimizações para Jogos em Janela"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Optimizations for Windowed Games' -ForegroundColor Magenta",
+        "reg add \"HKCU\\Software\\Microsoft\\DirectX\\UserGpuPreferences\" /v \"DirectXUserGlobalSettings\" /t REG_SZ /d \"SwapEffectUpgradeEnable=0;\" /f"
+       ]
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "fullscreenoptimizations",
+     "title": {
+      "en": "Disable Fullscreen Optimizations",
+      "pt": "Desativar Otimizações de Tela Cheia"
+     },
+     "items": [
+      {
+       "id": "fullscreenoptimizations",
+       "title": {
+        "en": "Disable Fullscreen Optimizations",
+        "pt": "Desativar Otimizações de Tela Cheia"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Fullscreen Optimizations' -ForegroundColor Magenta",
+        "reg add \"HKCU\\System\\GameConfigStore\" /v \"GameDVR_DXGIHonorFSEWindowsCompatible\" /t REG_DWORD /d 1 /f"
+       ]
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "mouseacc",
+     "title": {
+      "en": "Disable Mouse Acceleration",
+      "pt": "Desativar Aceleração do Mouse"
+     },
+     "items": [
+      {
+       "id": "mouseacc",
+       "title": {
+        "en": "Disable Mouse Acceleration",
+        "pt": "Desativar Aceleração do Mouse"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Mouse Acceleration' -ForegroundColor Magenta",
+        "reg add \"HKCU\\Control Panel\\Mouse\" /v \"MouseSpeed\" /t REG_SZ /d \"0\" /f",
+        "reg add \"HKCU\\Control Panel\\Mouse\" /v \"MouseThreshold1\" /t REG_SZ /d \"0\" /f",
+        "reg add \"HKCU\\Control Panel\\Mouse\" /v \"MouseThreshold2\" /t REG_SZ /d \"0\" /f"
+       ]
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "gamemode",
+     "title": {
+      "en": "Disable Game Mode",
+      "pt": "Desativar Modo de Jogo"
+     },
+     "items": [
+      {
+       "id": "gamemode",
+       "title": {
+        "en": "Disable Game Mode",
+        "pt": "Desativar Modo de Jogo"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Game Mode' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\GameDVR\" /v \"AutoGameModeEnabled\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\GameBar\" /v \"AutoGameModeEnabled\" /t REG_DWORD /d 0 /f"
+       ]
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "gamebar",
+     "title": {
+      "en": "Disable Game Bar",
+      "pt": "Desativar Game Bar"
+     },
+     "items": [
+      {
+       "id": "gamebar",
+       "title": {
+        "en": "Disable Game Bar",
+        "pt": "Desativar Game Bar"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Game Bar' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\GameDVR\" /v \"AllowGameDVR\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\GameDVR\" /v \"AppCaptureEnabled\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\GameBar\" /v \"UseNexusForGameBarEnabled\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\GameBar\" /v \"ShowStartupPanel\" /t REG_DWORD /d 0 /f"
+       ]
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "screenrecording",
+     "title": {
+      "en": "Disable Captures",
+      "pt": "Desativar Capturas"
+     },
+     "items": [
+      {
+       "id": "screenrecording",
+       "title": {
+        "en": "Disable Captures",
+        "pt": "Desativar Capturas"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Xbox Screen Recording' -ForegroundColor Magenta",
+        "reg add \"HKCU\\System\\GameConfigStore\" /v \"GameDVR_Enabled\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows\\GameDVR\" /v \"AllowGameDVR\" /t REG_DWORD /d 0 /f"
+       ]
+      }
+     ],
+     "single": true
+    }
+   ]
+  },
+  {
+   "id": "performance",
+   "title": {
+    "en": "Performance",
+    "pt": "Desempenho"
+   },
+   "groups": [
+    {
+     "id": "googledns",
+     "title": {
+      "en": "Set as DNS",
+      "pt": "Definir como DNS"
+     },
+     "exclusive": true,
+     "items": [
+      {
+       "id": "googledns",
+       "title": {
+        "en": "Google DNS",
+        "pt": "DNS do Google"
+       },
+       "commands": [
+        "Write-Host '-- Setting Google DNS' -ForegroundColor Magenta",
+        "$adapterName = (Get-NetAdapter | Where-Object {$_.Status -eq \"Up\"}).Name",
+        "Set-DnsClientServerAddress -InterfaceAlias $adapterName -ServerAddresses @(\"8.8.8.8\",\"8.8.4.4\")"
+       ],
+       "radioGroup": "performance.dns"
+      },
+      {
+       "id": "cloudflaredns",
+       "title": {
+        "en": "Cloudflare DNS",
+        "pt": "DNS da Cloudflare"
+       },
+       "commands": [
+        "Write-Host '-- Setting Cloudflare DNS' -ForegroundColor Magenta",
+        "$adapterName = (Get-NetAdapter | Where-Object {$_.Status -eq \"Up\"}).Name",
+        "Set-DnsClientServerAddress -InterfaceAlias $adapterName -ServerAddresses @(\"1.1.1.1\",\"1.0.0.1\")"
+       ],
+       "radioGroup": "performance.dns"
+      },
+      {
+       "id": "quad9dns",
+       "title": {
+        "en": "Quad9 DNS",
+        "pt": "DNS da Quad9"
+       },
+       "commands": [
+        "Write-Host '-- Setting Quad9 DNS' -ForegroundColor Magenta",
+        "$adapterName = (Get-NetAdapter | Where-Object {$_.Status -eq \"Up\"}).Name",
+        "Set-DnsClientServerAddress -InterfaceAlias $adapterName -ServerAddresses @(\"9.9.9.9\",\"149.112.112.112\")"
+       ],
+       "radioGroup": "performance.dns"
+      },
+      {
+       "id": "opendns",
+       "title": {
+        "en": "OpenDNS",
+        "pt": "OpenDNS"
+       },
+       "commands": [
+        "Write-Host '-- Setting OpenDNS DNS' -ForegroundColor Magenta",
+        "$adapterName = (Get-NetAdapter | Where-Object {$_.Status -eq \"Up\"}).Name",
+        "Set-DnsClientServerAddress -InterfaceAlias $adapterName -ServerAddresses @(\"208.67.222.222\",\"208.67.220.220\")"
+       ],
+       "radioGroup": "performance.dns"
+      },
+      {
+       "id": "adguardns",
+       "title": {
+        "en": "AdGuard DNS",
+        "pt": "DNS do AdGuard"
+       },
+       "commands": [
+        "Write-Host '-- Setting AdGuard DNS' -ForegroundColor Magenta",
+        "$adapterName = (Get-NetAdapter | Where-Object {$_.Status -eq \"Up\"}).Name",
+        "Set-DnsClientServerAddress -InterfaceAlias $adapterName -ServerAddresses @(\"94.140.14.14\",\"94.140.15.15\")"
+       ],
+       "radioGroup": "performance.dns"
+      }
+     ]
+    },
+    {
+     "id": "balanced",
+     "title": {
+      "en": "Choose Power Plan",
+      "pt": "Escolher Plano de Energia"
+     },
+     "exclusive": true,
+     "items": [
+      {
+       "id": "balanced",
+       "title": {
+        "en": "Balanced",
+        "pt": "Equilibrado"
+       },
+       "commands": [
+        "Write-Host '-- Enabling Balanced Power Plan' -ForegroundColor Magenta",
+        "$balancedGUID = '381b4222-f694-41f0-9685-ff5bb260df2e'",
+        "$allSchemes = powercfg -list",
+        "if ($allSchemes -match $balancedGUID) {",
+        "    Write-Host '-- Power plan already exists.'",
+        "} else {",
+        "    $output = powercfg -duplicatescheme $balancedGUID 2>&1",
+        "    if ($output -match 'Unable to create a new power scheme' -or $output -match 'The power scheme, subgroup or setting specified does not exist') {",
+        "        powercfg -RestoreDefaultSchemes",
+        "    }",
+        "}",
+        "powercfg -setactive $balancedGUID"
+       ],
+       "radioGroup": "performance.powerplan"
+      },
+      {
+       "id": "highperformance",
+       "title": {
+        "en": "High Performance",
+        "pt": "Alto Desempenho"
+       },
+       "commands": [
+        "Write-Host '-- Enabling High Performance Power Plan' -ForegroundColor Magenta",
+        "$highPlanGUID = '8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c'",
+        "$allSchemes = powercfg -list",
+        "if ($allSchemes -match $highPlanGUID) {",
+        "    Write-Host '-- Power plan already exists.'",
+        "} else {",
+        "    $output = powercfg -duplicatescheme $highPlanGUID 2>&1",
+        "    if ($output -match 'Unable to create a new power scheme' -or $output -match 'The power scheme, subgroup or setting specified does not exist') {",
+        "        powercfg -RestoreDefaultSchemes",
+        "    }",
+        "}",
+        "powercfg -setactive $highPlanGUID"
+       ],
+       "radioGroup": "performance.powerplan"
+      },
+      {
+       "id": "ultimateperformance",
+       "title": {
+        "en": "Ultimate Performance",
+        "pt": "Desempenho Máximo"
+       },
+       "commands": [
+        "Write-Host '-- Enabling Ultimate Performance Power Plan' -ForegroundColor Magenta",
+        "$ultimateGUID = 'e9a42b02-d5df-448d-aa00-03f14749eb61'",
+        "$allSchemes = powercfg -list",
+        "if ($allSchemes -match $ultimateGUID) {",
+        "    Write-Host '-- Power plan already exists.'",
+        "} else {",
+        "    $output = powercfg -duplicatescheme $ultimateGUID 2>&1",
+        "    if ($output -match 'Unable to create a new power scheme' -or $output -match 'The power scheme, subgroup or setting specified does not exist') {",
+        "        powercfg -RestoreDefaultSchemes",
+        "    }",
+        "}",
+        "powercfg -setactive $ultimateGUID"
+       ],
+       "radioGroup": "performance.powerplan"
+      }
+     ]
+    },
+    {
+     "id": "powermanagement",
+     "title": {
+      "en": "Configure Power Plan",
+      "pt": "Configure Power Plan"
+     },
+     "desc": {
+      "en": "Only applies when device is plugged into wall power.",
+      "pt": "Only applies when device is plugged into wall power."
+     },
+     "items": [
+      {
+       "id": "powermanagement",
+       "title": {
+        "en": "Disable PCI Express Link State Power Management",
+        "pt": "Disable PCI Express Link State Power Management"
+       },
+       "commands": [
+        "Write-Host '-- Disabling PCI Express Link State Power Management' -ForegroundColor Magenta",
+        "powercfg /SETACVALUEINDEX SCHEME_CURRENT 501a4d13-42af-4429-9fd1-a8218c268e20 ee12f906-d277-404b-b6da-e5fa1a576df5 0"
+       ]
+      },
+      {
+       "id": "usbsuspending",
+       "title": {
+        "en": "Disable USB Selective Suspending",
+        "pt": "Disable USB Selective Suspending"
+       },
+       "commands": [
+        "Write-Host '-- Disabling USB Selective Suspending' -ForegroundColor Magenta",
+        "powercfg /SETACVALUEINDEX SCHEME_CURRENT 2a737441-1930-4402-8d77-b2bebba308a3 48e6b7a6-50f5-4782-a5d4-53bb8f07e226 0"
+       ]
+      },
+      {
+       "id": "disktimeout",
+       "title": {
+        "en": "Disable Disk Idle Timeout",
+        "pt": "Disable Disk Idle Timeout"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Disk Idle Timeout' -ForegroundColor Magenta",
+        "powercfg /SETACVALUEINDEX SCHEME_CURRENT 0012ee47-9041-4b5d-9b77-535fba8b1442 6738e2c4-e8a5-4a42-b16a-e040e769756e 0"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "manualservices",
+     "title": {
+      "en": "Set Services to Manual",
+      "pt": "Definir Serviços como Manual"
+     },
+     "desc": {
+      "en": "Starts services only when they are needed.",
+      "pt": "Inicia os serviços somente quando necessário."
+     },
+     "items": [
+      {
+       "id": "manualservices",
+       "title": {
+        "en": "Set Services to Manual",
+        "pt": "Definir Serviços como Manual"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Manual Services' -ForegroundColor Magenta",
+        "$manualServices = @(\"ALG\",\"AppMgmt\",\"AppReadiness\",\"Appinfo\",\"AxInstSV\",\"BDESVC\",\"BTAGService\",\"BcastDVRUserService\",\"BluetoothUserService\",\"Browser\",\"CDPSvc\",\"COMSysApp\",\"CaptureService\",\"CertPropSvc\",\"ConsentUxUserSvc\",\"CscService\",\"DevQueryBroker\",\"DeviceAssociationService\",\"DeviceInstall\",\"DevicePickerUserSvc\",\"DevicesFlowUserSvc\",\"DisplayEnhancementService\",\"DmEnrollmentSvc\",\"DsSvc\",\"DsmSvc\",\"EFS\",\"EapHost\",\"EntAppSvc\",\"FDResPub\",\"FrameServer\",\"FrameServerMonitor\",\"GraphicsPerfSvc\",\"HvHost\",\"IEEtwCollectorService\",\"InstallService\",\"InventorySvc\",\"IpxlatCfgSvc\",\"KtmRm\",\"LicenseManager\",\"LxpSvc\",\"MSDTC\",\"MSiSCSI\",\"McpManagementService\",\"MicrosoftEdgeElevationService\",\"MsKeyboardFilter\",\"NPSMSvc\",\"NaturalAuthentication\",\"NcaSvc\",\"NcbService\",\"NcdAutoSetup\",\"NetSetupSvc\",\"Netman\",\"NgcCtnrSvc\",\"NgcSvc\",\"NlaSvc\",\"PNRPAutoReg\",\"PcaSvc\",\"PeerDistSvc\",\"PenService\",\"PerfHost\",\"PhoneSvc\",\"PimIndexMaintenanceSvc\",\"PlugPlay\",\"PolicyAgent\",\"PrintNotify\",\"PushToInstall\",\"QWAVE\",\"RasAuto\",\"RasMan\",\"RetailDemo\",\"RmSvc\",\"RpcLocator\",\"SCPolicySvc\",\"SCardSvr\",\"SDRSVC\",\"SEMgrSvc\",\"SNMPTrap\",\"SSDPSRV\",\"ScDeviceEnum\",\"SensorDataService\",\"SensorService\",\"SensrSvc\",\"SessionEnv\",\"SharedAccess\",\"SmsRouter\",\"SstpSvc\",\"StiSvc\",\"StorSvc\",\"TapiSrv\",\"TextInputManagementService\",\"TieringEngineService\",\"TokenBroker\",\"TroubleshootingSvc\",\"TrustedInstaller\",\"UdkUserSvc\",\"UmRdpService\",\"UserDataSvc\",\"UsoSvc\",\"VSS\",\"VacSvc\",\"WEPHOSTSVC\",\"WFDSConMgrSvc\",\"WMPNetworkSvc\",\"WManSvc\",\"WPDBusEnum\",\"WalletService\",\"WarpJITSvc\",\"WbioSrvc\",\"WdNisSvc\",\"WdiServiceHost\",\"WdiSystemHost\",\"WebClient\",\"Wecsvc\",\"WerSvc\",\"WiaRpc\",\"WinRM\",\"WpcMonSvc\",\"WpnService\",\"WwanSvc\",\"autotimesvc\",\"bthserv\",\"camsvc\",\"cbdhsvc\",\"cloudidsvc\",\"dcsvc\",\"defragsvc\",\"diagsvc\",\"dmwappushservice\",\"dot3svc\",\"edgeupdate\",\"edgeupdatem\",\"embeddedmode\",\"fdPHost\",\"fhsvc\",\"hidserv\",\"icssvc\",\"lfsvc\",\"lltdsvc\",\"lmhosts\",\"msiserver\",\"netprofm\",\"p2pimsvc\",\"p2psvc\",\"perceptionsimulation\",\"pla\",\"seclogon\",\"smphost\",\"svsvc\",\"swprv\",\"upnphost\",\"vds\",\"vmicguestinterface\",\"vmicheartbeat\",\"vmickvpexchange\",\"vmicrdv\",\"vmicshutdown\",\"vmictimesync\",\"vmicvmsession\",\"vmicvss\",\"vmvss\",\"wbengine\",\"wcncsvc\",\"webthreatdefsvc\",\"wercplsupport\",\"wisvc\",\"wlidsvc\",\"wlpasvc\",\"wmiApSrv\",\"workfolderssvc\",\"wuauserv\",\"wudfsvc\")",
+        "$disabledServices = @(\"AppVClient\",\"AssignedAccessManagerSvc\",\"DiagTrack\",\"DialogBlockingService\",\"NetTcpPortSharing\",\"RemoteAccess\",\"RemoteRegistry\",\"shpamsvc\")",
+        "$manualServices | ForEach-Object { Set-Service -Name $_ -StartupType Manual }",
+        "$disabledServices | ForEach-Object { Set-Service -Name $_ -StartupType Disabled }"
+       ],
+       "desc": {
+        "en": "Starts services only when they are needed.",
+        "pt": "Inicia os serviços somente quando necessário."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "transparency",
+     "title": {
+      "en": "Disable Windows Transparency",
+      "pt": "Desativar Transparência do Windows"
+     },
+     "desc": {
+      "en": "Disables transparency, may improve system performance.",
+      "pt": "Desativa a transparência, podendo melhorar o desempenho do sistema."
+     },
+     "items": [
+      {
+       "id": "transparency",
+       "title": {
+        "en": "Disable Windows Transparency",
+        "pt": "Desativar Transparência do Windows"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Transparency' -ForegroundColor Magenta",
+        "reg add \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize\" /v \"EnableTransparency\" /t REG_DWORD /d 0 /f"
+       ],
+       "desc": {
+        "en": "Disables transparency, may improve system performance.",
+        "pt": "Desativa a transparência, podendo melhorar o desempenho do sistema."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "hags",
+     "title": {
+      "en": "Disable HAGS",
+      "pt": "Desativar HAGS"
+     },
+     "desc": {
+      "en": "Disables Hardware-Accelerated GPU Scheduling.",
+      "pt": "Desativa o agendamento de GPU com aceleração por hardware."
+     },
+     "items": [
+      {
+       "id": "hags",
+       "title": {
+        "en": "Disable HAGS",
+        "pt": "Desativar HAGS"
+       },
+       "commands": [
+        "Write-Host '-- Disabling HAGS' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers\" /v \"HwSchMode\" /t REG_DWORD /d 1 /f"
+       ],
+       "desc": {
+        "en": "Disables Hardware-Accelerated GPU Scheduling.",
+        "pt": "Desativa o agendamento de GPU com aceleração por hardware."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "ipv6",
+     "title": {
+      "en": "Set IPv4 as Preferred",
+      "pt": "Definir IPv4 como Preferencial"
+     },
+     "desc": {
+      "en": "Prefers IPv4 over IPv6, can improve latency.",
+      "pt": "Prioriza o IPv4 em relação ao IPv6, podendo melhorar a latência."
+     },
+     "items": [
+      {
+       "id": "ipv6",
+       "title": {
+        "en": "Set IPv4 as Preferred",
+        "pt": "Definir IPv4 como Preferencial"
+       },
+       "commands": [
+        "Write-Host '-- Setting IPv4 Priority' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SYSTEM\\CurrentControlSet\\Services\\Tcpip6\\Parameters\" /v \"DisabledComponents\" /t REG_DWORD /d 32 /f"
+       ],
+       "desc": {
+        "en": "Prefers IPv4 over IPv6, can improve latency.",
+        "pt": "Prioriza o IPv4 em relação ao IPv6, podendo melhorar a latência."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "mousedelay",
+     "title": {
+      "en": "Disable Mouse Delay",
+      "pt": "Desativar Atraso do Mouse"
+     },
+     "desc": {
+      "en": "Disables the 400ms menu show and hover delay.",
+      "pt": "Desativa o atraso de 400 ms na exibição do menu e na passagem do cursor."
+     },
+     "items": [
+      {
+       "id": "mousedelay",
+       "title": {
+        "en": "Disable Mouse Delay",
+        "pt": "Desativar Atraso do Mouse"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Mouse Delay Times' -ForegroundColor Magenta",
+        "reg add \"HKCU\\Control Panel\\Desktop\" /v \"MenuShowDelay\" /t REG_SZ /d 0 /f",
+        "reg add \"HKCU\\Control Panel\\Mouse\" /v \"MouseHoverTime\" /t REG_SZ /d 0 /f"
+       ],
+       "desc": {
+        "en": "Disables the 400ms menu show and hover delay.",
+        "pt": "Desativa o atraso de 400 ms na exibição do menu e na passagem do cursor."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "limitdefender",
+     "title": {
+      "en": "Limit Defender CPU Usage",
+      "pt": "Limitar Uso de CPU pelo Defender"
+     },
+     "desc": {
+      "en": "Limits Defender maximum CPU usage at 25%.",
+      "pt": "Limita o uso máximo de CPU do Defender a 25%."
+     },
+     "items": [
+      {
+       "id": "limitdefender",
+       "title": {
+        "en": "Limit Defender CPU Usage",
+        "pt": "Limitar Uso de CPU pelo Defender"
+       },
+       "commands": [
+        "Write-Host '-- Limiting Windows Defender Usage' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows Defender\\Scan\" /v \"AvgCPULoadFactor\" /t REG_DWORD /d \"25\" /f",
+        "reg add \"HKLM\\SOFTWARE\\Policies\\Microsoft\\Windows Defender\\Scan\" /v \"ScanAvgCPULoadFactor\" /t REG_DWORD /d \"25\" /f"
+       ],
+       "desc": {
+        "en": "Limits Defender maximum CPU usage at 25%.",
+        "pt": "Limita o uso máximo de CPU do Defender a 25%."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "coreisolation",
+     "title": {
+      "en": "Disable Core Isolation",
+      "pt": "Desativar Isolamento de Núcleo"
+     },
+     "desc": {
+      "en": "May improve performance at the cost of security.",
+      "pt": "Pode melhorar o desempenho à custa da segurança."
+     },
+     "items": [
+      {
+       "id": "coreisolation",
+       "title": {
+        "en": "Disable Core Isolation",
+        "pt": "Desativar Isolamento de Núcleo"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Core Isolation' -ForegroundColor Magenta",
+        "reg add \"HKLM\\System\\CurrentControlSet\\Control\\DeviceGuard\\Scenarios\\HypervisorEnforcedCodeIntegrity\" /v \"Enabled\" /t REG_DWORD /d 0 /f"
+       ],
+       "desc": {
+        "en": "May improve performance at the cost of security.",
+        "pt": "Pode melhorar o desempenho à custa da segurança."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "disableprefetch",
+     "title": {
+      "en": "Disable SysMain",
+      "pt": "Desativar SysMain"
+     },
+     "desc": {
+      "en": "Disables prefetch, might improve performance at the cost of app startup time.",
+      "pt": "Desativa o pré-carregamento, podendo melhorar o desempenho ao custo do tempo de inicialização dos aplicativos."
+     },
+     "items": [
+      {
+       "id": "disableprefetch",
+       "title": {
+        "en": "Disable SysMain",
+        "pt": "Desativar SysMain"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Prefetch' -ForegroundColor Magenta",
+        "Stop-Service -Name \"sysmain\"",
+        "Set-Service -Name \"sysmain\" -StartupType Disabled"
+       ],
+       "desc": {
+        "en": "Disables prefetch, might improve performance at the cost of app startup time.",
+        "pt": "Desativa o pré-carregamento, podendo melhorar o desempenho ao custo do tempo de inicialização dos aplicativos."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "storagesense",
+     "title": {
+      "en": "Disable Storage Sense",
+      "pt": "Desativar Sensor de Armazenamento"
+     },
+     "desc": {
+      "en": "Disables Storage Sense, stops automatic disk cleanup.",
+      "pt": "Desativa o sensor de armazenamento e interrompe a limpeza automática do disco."
+     },
+     "items": [
+      {
+       "id": "storagesense",
+       "title": {
+        "en": "Disable Storage Sense",
+        "pt": "Desativar Sensor de Armazenamento"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Storage Sense' -ForegroundColor Magenta",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\StorageSense\\Parameters\\StoragePolicy\" /v \"01\" /t REG_DWORD /d 0 /f"
+       ],
+       "desc": {
+        "en": "Disables Storage Sense, stops automatic disk cleanup.",
+        "pt": "Desativa o sensor de armazenamento e interrompe a limpeza automática do disco."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "wsearch",
+     "title": {
+      "en": "Disable Search",
+      "pt": "Desativar Pesquisa"
+     },
+     "desc": {
+      "en": "Disables Windows Search, disables drive indexing.",
+      "pt": "Desativa a pesquisa do Windows e a indexação de unidades."
+     },
+     "items": [
+      {
+       "id": "wsearch",
+       "title": {
+        "en": "Disable Search",
+        "pt": "Desativar Pesquisa"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Windows Search' -ForegroundColor Magenta",
+        "Stop-Service -Name \"wsearch\"",
+        "Set-Service -Name \"wsearch\" -StartupType Disabled"
+       ],
+       "desc": {
+        "en": "Disables Windows Search, disables drive indexing.",
+        "pt": "Desativa a pesquisa do Windows e a indexação de unidades."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "faststartup",
+     "title": {
+      "en": "Disable Fast Startup",
+      "pt": "Desativar Inicialização Rápida"
+     },
+     "desc": {
+      "en": "Disables Fast Startup, may fix boot and update issues.",
+      "pt": "Desativa a Inicialização Rápida, pode corrigir problemas de inicialização e atualização."
+     },
+     "items": [
+      {
+       "id": "faststartup",
+       "title": {
+        "en": "Disable Fast Startup",
+        "pt": "Desativar Inicialização Rápida"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Fast Startup' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Power\" /v \"HiberbootEnabled\" /t REG_DWORD /d 0 /f"
+       ],
+       "desc": {
+        "en": "Disables Fast Startup, may fix boot and update issues.",
+        "pt": "Desativa a Inicialização Rápida, pode corrigir problemas de inicialização e atualização."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "disablehibernation",
+     "title": {
+      "en": "Disable Hibernation",
+      "pt": "Desativar Hibernação"
+     },
+     "desc": {
+      "en": "Not recommended on laptops.",
+      "pt": "Não recomendado para laptops."
+     },
+     "items": [
+      {
+       "id": "disablehibernation",
+       "title": {
+        "en": "Disable Hibernation",
+        "pt": "Desativar Hibernação"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Hibernation' -ForegroundColor Magenta",
+        "powercfg /h off"
+       ],
+       "desc": {
+        "en": "Not recommended on laptops.",
+        "pt": "Não recomendado para laptops."
+       }
+      }
+     ],
+     "single": true
+    }
+   ]
+  },
+  {
+   "id": "misc",
+   "title": {
+    "en": "Miscellaneous",
+    "pt": "Vários"
+   },
+   "groups": [
+    {
+     "id": "uisettings",
+     "title": {
+      "en": "UI Settings",
+      "pt": "UI Settings"
+     },
+     "desc": {
+      "en": "Personalize and toggle various Windows UI settings.",
+      "pt": "Personalize and toggle various Windows UI settings."
+     },
+     "items": [
+      {
+       "id": "darkmode",
+       "title": {
+        "en": "Enable Dark Mode",
+        "pt": "Ativar Modo Escuro"
+       },
+       "commands": [
+        "Write-Host '-- Enabling Dark Mode' -ForegroundColor Magenta",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize\" /v \"AppsUseLightTheme\" /t REG_DWORD /d 0 /f",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize\" /v \"SystemUsesLightTheme\" /t REG_DWORD /d 0 /f"
+       ]
+      },
+      {
+       "id": "classicmenu",
+       "title": {
+        "en": "Set Classic Right Click Menu",
+        "pt": "Definir Menu Clássico de Contexto"
+       },
+       "commands": [
+        "Write-Host '-- Setting Classic Right-Click Menu' -ForegroundColor Magenta",
+        "reg add \"HKCU\\Software\\Classes\\CLSID\\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\\InprocServer32\" /f /ve"
+       ]
+      },
+      {
+       "id": "filextensions",
+       "title": {
+        "en": "Show File Extensions",
+        "pt": "Mostrar Extensões de Arquivo"
+       },
+       "commands": [
+        "Write-Host '-- Showing File Extensions' -ForegroundColor Magenta",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" /v \"HideFileExt\" /t REG_DWORD /d 0 /f"
+       ]
+      },
+      {
+       "id": "endtask",
+       "title": {
+        "en": "Add End Task to Context Menu",
+        "pt": "Adicionar Finalizar Tarefa ao Menu de Contexto"
+       },
+       "commands": [
+        "Write-Host '-- Adding End Task to Right-Click' -ForegroundColor Magenta",
+        "reg add \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\\TaskbarDeveloperSettings\" /v \"TaskbarEndTask\" /t REG_DWORD /d \"1\" /f"
+       ]
+      },
+      {
+       "id": "hiddenfiles",
+       "title": {
+        "en": "Show Hidden Files",
+        "pt": "Mostrar Arquivos Ocultos"
+       },
+       "commands": [
+        "Write-Host '-- Showing Hidden Files' -ForegroundColor Magenta",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" /v \"Hidden\" /t REG_DWORD /d 1 /f"
+       ]
+      },
+      {
+       "id": "taskbarleft",
+       "title": {
+        "en": "Move Taskbar Icons to Left",
+        "pt": "Mover Ícones da Barra de Tarefas para a Esquerda"
+       },
+       "commands": [
+        "Write-Host '-- Moving Taskbar Icons to the left' -ForegroundColor Magenta",
+        "reg add \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" /v TaskbarAl /t REG_DWORD /d 0 /f"
+       ]
+      },
+      {
+       "id": "recentapps",
+       "title": {
+        "en": "Hide Recent Added Apps",
+        "pt": "Hide Recent Added Apps"
+       },
+       "commands": [
+        "Write-Host '-- Hiding Recently Added Apps in Start Menu' -ForegroundColor Magenta",
+        "reg add \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Start\" /v \"ShowRecentList\" /t REG_DWORD /d \"0\" /f"
+       ]
+      },
+      {
+       "id": "settingshome",
+       "title": {
+        "en": "Hide Home Page from Settings",
+        "pt": "Hide Home Page from Settings"
+       },
+       "commands": [
+        "Write-Host '-- Hiding Settings Home Page' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer\" /v SettingsPageVisibility /t REG_SZ /d \"hide:home\" /f"
+       ]
+      },
+      {
+       "id": "homegallery",
+       "title": {
+        "en": "Remove Home and Gallery from File Explorer",
+        "pt": "Remover Início e Galeria do Explorador de Arquivos"
+       },
+       "commands": [
+        "Write-Host '-- Removing Home and Gallery from File Explorer' -ForegroundColor Magenta",
+        "reg add \"HKCU\\Software\\Classes\\CLSID\\{f874310e-b6b7-47dc-bc84-b9e6b38f5903}\" /v \"System.IsPinnedToNameSpaceTree\" /t REG_DWORD /d \"0\" /f",
+        "reg add \"HKCU\\Software\\Classes\\CLSID\\{e88865ea-0e1c-4e20-9aa6-edcd0212c87c}\" /v \"System.IsPinnedToNameSpaceTree\" /t REG_DWORD /d \"0\" /f",
+        "reg add \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" /v \"LaunchTo\" /t REG_DWORD /d \"1\" /f"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "mpo",
+     "title": {
+      "en": "Disable Multiplane Overlay (MPO)",
+      "pt": "Desativar Sobreposição Multiplano (MPO)"
+     },
+     "desc": {
+      "en": "Disables MPO, might help with screen flickering and crashes.",
+      "pt": "Desativa o MPO, podendo ajudar com oscilações na tela e travamentos."
+     },
+     "items": [
+      {
+       "id": "mpo",
+       "title": {
+        "en": "Disable Multiplane Overlay (MPO)",
+        "pt": "Desativar Sobreposição Multiplano (MPO)"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Multiplane Overlay (MPO)' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\Dwm\" /v \"OverlayTestMode\" /t REG_DWORD /d \"00000005\" /f"
+       ],
+       "desc": {
+        "en": "Disables MPO, might help with screen flickering and crashes.",
+        "pt": "Desativa o MPO, podendo ajudar com oscilações na tela e travamentos."
+       }
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "utctime",
+     "title": {
+      "en": "Set Hardware Clock to UTC",
+      "pt": "Set Hardware Clock to UTC"
+     },
+     "items": [
+      {
+       "id": "utctime",
+       "title": {
+        "en": "Set Hardware Clock to UTC",
+        "pt": "Set Hardware Clock to UTC"
+       },
+       "commands": [
+        "Write-Host '-- Setting Hardware Clock to UTC' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SYSTEM\\CurrentControlSet\\Control\\TimeZoneInformation\" /v RealTimeIsUniversal /t REG_DWORD /d 1 /f"
+       ]
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "numlockstartup",
+     "title": {
+      "en": "Disable Numlock on Startup",
+      "pt": "Desativar Num Lock na Inicialização"
+     },
+     "items": [
+      {
+       "id": "numlockstartup",
+       "title": {
+        "en": "Disable Numlock on Startup",
+        "pt": "Desativar Num Lock na Inicialização"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Num Lock on Startup' -ForegroundColor Magenta",
+        "reg add \"HKCU\\Control Panel\\Keyboard\" /v \"InitialKeyboardIndicators\" /t REG_SZ /d \"0\" /f"
+       ]
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "stickykeys",
+     "title": {
+      "en": "Disable Sticky Keys",
+      "pt": "Desativar Teclas de Aderência"
+     },
+     "items": [
+      {
+       "id": "stickykeys",
+       "title": {
+        "en": "Disable Sticky Keys",
+        "pt": "Desativar Teclas de Aderência"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Sticky Keys' -ForegroundColor Magenta",
+        "reg add \"HKCU\\Control Panel\\Accessibility\\StickyKeys\" /v \"Flags\" /t REG_SZ /d \"58\" /f"
+       ]
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "snapflyout",
+     "title": {
+      "en": "Disable Snap Layout",
+      "pt": "Desativar Layout de Ajuste"
+     },
+     "items": [
+      {
+       "id": "snapflyout",
+       "title": {
+        "en": "Disable Snap Layout",
+        "pt": "Desativar Layout de Ajuste"
+       },
+       "commands": [
+        "Write-Host '-- Disabling Snap Assist Flyout' -ForegroundColor Magenta",
+        "reg add \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced\" /v \"EnableSnapAssistFlyout\" /t REG_DWORD /d 0 /f"
+       ]
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "detailedbsod",
+     "title": {
+      "en": "Enable Detailed BSOD",
+      "pt": "Ativar Tela Azul Detalhada"
+     },
+     "items": [
+      {
+       "id": "detailedbsod",
+       "title": {
+        "en": "Enable Detailed BSOD",
+        "pt": "Ativar Tela Azul Detalhada"
+       },
+       "commands": [
+        "Write-Host '-- Enabling Detailed BSOD' -ForegroundColor Magenta",
+        "reg add \"HKLM\\System\\CurrentControlSet\\Control\\CrashControl\" /v \"DisplayParameters\" /t REG_DWORD /d 1 /f"
+       ]
+      }
+     ],
+     "single": true
+    },
+    {
+     "id": "verboselogon",
+     "title": {
+      "en": "Enable Verbose Logon",
+      "pt": "Ativar Logon Detalhado"
+     },
+     "items": [
+      {
+       "id": "verboselogon",
+       "title": {
+        "en": "Enable Verbose Logon",
+        "pt": "Ativar Logon Detalhado"
+       },
+       "commands": [
+        "Write-Host '-- Enabling Verbose Logon' -ForegroundColor Magenta",
+        "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\" /v \"VerboseStatus\" /t REG_DWORD /d 1 /f"
+       ]
+      }
+     ],
+     "single": true
+    }
+   ]
+  }
+ ],
+ "presets": {
+  "basic": [
+   "cleanmgr",
+   "cleantemp",
+   "sfc",
+   "consumerfeatures",
+   "recall",
+   "debloatedge",
+   "taskbarwidgets",
+   "wpbt",
+   "diagaccess",
+   "aigenerationaccess",
+   "updatepause",
+   "activityfeed",
+   "wtelemetry",
+   "wsearchtelemetry",
+   "appexperience",
+   "targetads",
+   "nvidiatelemetry",
+   "deliveryoptimization",
+   "manualservices",
+   "mousedelay",
+   "endtask"
+  ],
+  "strict": [
+   "cleanmgr",
+   "cleantemp",
+   "sfc",
+   "consumerfeatures",
+   "recall",
+   "msstoreupdates",
+   "debloatedge",
+   "copilot",
+   "notepadrewrite",
+   "clicktodo",
+   "paintai",
+   "aiappxpackages",
+   "aifiles",
+   "taskbarwidgets",
+   "accinfoaccess",
+   "contactsaccess",
+   "callhistoryaccess",
+   "messagingaccess",
+   "emailaccess",
+   "tasksaccess",
+   "diagaccess",
+   "phoneaccess",
+   "trustedaccess",
+   "calendaraccess",
+   "motionaccess",
+   "radioaccess",
+   "recordingsaccess",
+   "screenshotborderaccess",
+   "aigenerationaccess",
+   "updatepause",
+   "wpbt",
+   "bitlocker",
+   "cloudsync",
+   "activityfeed",
+   "screenrecording",
+   "automap",
+   "wtelemetry",
+   "wsearchtelemetry",
+   "officetelemetry",
+   "appexperience",
+   "wfeedback",
+   "handwriting",
+   "windowsdrm",
+   "cloudbasedspeech",
+   "targetads",
+   "nvidiatelemetry",
+   "powershelltelemetry",
+   "deliveryoptimization",
+   "ultimateperformance",
+   "manualservices",
+   "hags",
+   "ipv6",
+   "mousedelay",
+   "limitdefender",
+   "disableprefetch",
+   "faststartup",
+   "endtask",
+   "filextensions",
+   "hiddenfiles"
+  ],
+  "extreme": [
+   "cleanmgr",
+   "cleantemp",
+   "dism",
+   "sfc",
+   "resetnetwork",
+   "appx:*ACGMediaPlayer*",
+   "appx:*ActiproSoftwareLLC*",
+   "appx:*AdobePhotoshopExpress*",
+   "appx:*BubbleWitch3Saga*",
+   "appx:*CandyCrush*",
+   "appx:*DropboxOEM*",
+   "appx:*Duolingo-LearnLanguagesforFree*",
+   "appx:*EclipseManager*",
+   "appx:*Facebook*",
+   "appx:*Flipboard*",
+   "appx:*HiddenCity*",
+   "appx:*Hulu*",
+   "appx:*ClearChannelRadioDigital.iHeartRadio*",
+   "appx:*LinkedInForWindows*",
+   "appx:*McAfee*",
+   "appx:*Netflix*",
+   "appx:*OneCalendar*",
+   "appx:*PandoraMediaInc*",
+   "appx:*RandomSaladGamesLLC*",
+   "appx:*Royal Revolt*",
+   "appx:*ShazamEntertainmentLtd.Shazam*",
+   "appx:*Speed Test*",
+   "appx:*SpotifyAB.SpotifyMusic*",
+   "appx:*Sway*",
+   "appx:*Twitter*",
+   "appx:*Viber*",
+   "appx:*Wunderlist*",
+   "xbox",
+   "consumerfeatures",
+   "microsoftstore",
+   "msstoreupdates",
+   "onedrive",
+   "debloatedge",
+   "aiappxpackages",
+   "copilot",
+   "recall",
+   "clicktodo",
+   "notepadrewrite",
+   "paintai",
+   "aifiles",
+   "taskbarwidgets",
+   "locationaccess",
+   "accinfoaccess",
+   "contactsaccess",
+   "callhistoryaccess",
+   "messagingaccess",
+   "emailaccess",
+   "tasksaccess",
+   "diagaccess",
+   "voiceactivationaccess",
+   "phoneaccess",
+   "trustedaccess",
+   "calendaraccess",
+   "motionaccess",
+   "radioaccess",
+   "recordingsaccess",
+   "screenshotborderaccess",
+   "aigenerationaccess",
+   "updatepause",
+   "wpbt",
+   "bitlocker",
+   "cloudsync",
+   "activityfeed",
+   "notificationtray",
+   "screenrecording",
+   "automap",
+   "default0user",
+   "wtelemetry",
+   "wsearchtelemetry",
+   "officetelemetry",
+   "appexperience",
+   "wfeedback",
+   "handwriting",
+   "windowsdrm",
+   "cloudbasedspeech",
+   "targetads",
+   "adobetelemetry",
+   "nvidiatelemetry",
+   "vscodetelemetry",
+   "mediatelemetry",
+   "powershelltelemetry",
+   "ccleanertelemetry",
+   "googleupdates",
+   "adobeupdates",
+   "deliveryoptimization",
+   "gamebar",
+   "ultimateperformance",
+   "manualservices",
+   "hags",
+   "ipv6",
+   "mousedelay",
+   "limitdefender",
+   "coreisolation",
+   "disableprefetch",
+   "storagesense",
+   "wsearch",
+   "faststartup",
+   "endtask",
+   "homegallery",
+   "filextensions",
+   "hiddenfiles",
+   "stickykeys"
+  ]
+ }
+}
