@@ -1,0 +1,13 @@
+Deblowin
+Copyright (C) 2026 allangsilva97
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, version 3. It is distributed WITHOUT ANY WARRANTY; see LICENSE.
+
+Third-party material
+--------------------
+The tweak catalog (data/catalog.json: PowerShell commands, presets and labels)
+was adapted from WinScript, Copyright (C) flick9000,
+https://github.com/flick9000/winscript, licensed under GPL-3.0.
+Modified for Deblowin: commands reorganized into a catalog, some items removed.

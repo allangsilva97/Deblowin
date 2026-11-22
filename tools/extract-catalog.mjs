@@ -1,16 +1,16 @@
-// Extracts the tweak catalog from a WinScript checkout (https://github.com/flick9000/winscript)
+// Extracts the tweak catalog from the upstream source checkout (see NOTICE)
 // into data/catalog.json, which Deblowin embeds at build time.
 //
-// Usage: node tools/extract-catalog.mjs <path-to-winscript-checkout>
+// Usage: node tools/extract-catalog.mjs <path-to-source-checkout>
 //
-// WinScript is GPL-3.0; the scripts it contains keep that license (see LICENSE).
+// The upstream scripts are GPL-3.0 and keep that license (see NOTICE).
 
 import fs from "node:fs";
 import path from "node:path";
 
 const root = process.argv[2];
 if (!root) {
-    console.error("Usage: node tools/extract-catalog.mjs <winscript-dir>");
+    console.error("Usage: node tools/extract-catalog.mjs <source-dir>");
     process.exit(1);
 }
 const src = path.join(root, "app", "src");
@@ -111,7 +111,7 @@ const page = read("components/MainPage.astro");
 const SKIP_TABS = new Set(["install", "script", "localizations"]);
 // Items that are not tweaks or that Deblowin deliberately leaves out.
 const SKIP_IDS = new Set(["none", "installmas"]);
-// Items handled by the script header in WinScript (MockupCode.astro) rather than scripts.ts.
+// Items handled by the script header upstream (MockupCode.astro) rather than scripts.ts.
 const SPECIAL = {
     restorepoint: [
         "Write-Host '-- Creating a restore point' -ForegroundColor Magenta",
@@ -224,7 +224,6 @@ for (const [k, ids] of Object.entries(presets)) {
 }
 
 const catalog = {
-    source: "https://github.com/flick9000/winscript",
     generated: new Date().toISOString(),
     categories,
     presets: outPresets,

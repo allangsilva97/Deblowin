@@ -1163,12 +1163,25 @@ namespace Deblowin
             w.SetResourceReference(TextBlock.ForegroundProperty, "WarnBrush");
             w.Margin = new Thickness(0, 10, 0, 14);
             sp.Children.Add(w);
-            var link = Btn(L.T("a.source"), "Btn", delegate { try { Process.Start("https://github.com/flick9000/winscript"); } catch { } });
+            var link = Btn(L.T("a.source"), "Btn", delegate { ShowNotice(); });
             link.HorizontalAlignment = HorizontalAlignment.Left;
             link.Margin = new Thickness(0);
             sp.Children.Add(link);
             card.Child = sp;
             body.Children.Add(card);
+        }
+
+        void ShowNotice()
+        {
+            string text = "";
+            try
+            {
+                using (var s = Assembly.GetExecutingAssembly().GetManifestResourceStream("NOTICE"))
+                using (var r = new StreamReader(s, Encoding.UTF8)) text = r.ReadToEnd();
+            }
+            catch { }
+            text += "\nGPL-3.0: https://www.gnu.org/licenses/gpl-3.0.html";
+            MessageBox.Show(this, text, L.T("a.source"), MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         // ============================================================ window events
