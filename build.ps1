@@ -56,9 +56,10 @@ $app = Join-Path $dist "Deblowin$suffix.exe"
 Invoke-Csc ($common + @(
     "/out:$app",
     "/resource:$(Join-Path $root 'data\catalog.json'),catalog.json",
+    "/resource:$(Join-Path $root 'data\apps.json'),apps.json",
     "/resource:$(Join-Path $root 'src\Theme.xaml'),Theme.xaml",
     "/resource:$(Join-Path $root 'NOTICE'),NOTICE"
-) + (($refs + (Join-Path $fw 'System.Web.Extensions.dll')) | ForEach-Object { "/r:$_" }) + @(
+) + (($refs + (Join-Path $fw 'System.Web.Extensions.dll') + (Join-Path $fw 'System.Security.dll')) | ForEach-Object { "/r:$_" }) + @(
     (Join-Path $root 'src\AssemblyInfo.cs'),
     (Join-Path $root 'src\Core.cs'),
     (Join-Path $root 'src\MainWindow.cs')

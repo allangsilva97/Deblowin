@@ -4,6 +4,7 @@ Aplicativo leve para Windows 10/11 que aplica scripts de debloat e ajustes: remo
 
 - **Leve:** cerca de 260 KB, sem dependências (usa o .NET Framework 4.8 que já vem no Windows).
 - **Fácil de usar:** categorias na barra lateral, interruptores com descrição, busca (`Ctrl+F`), presets (Básico, Rigoroso e Extremo) e uma tela de revisão antes de executar.
+- **Instalar apps:** aba com 38 apps comuns (navegadores, mensagens, utilitários, desenvolvimento, jogos), instalados pelo `winget`. Só IDs do repositório winget são aceitos.
 - **Configurável:** idioma (PT/EN), tema (sistema, claro ou escuro), ponto de restauração automático, confirmação antes de executar, execução na própria janela (com log e barra de progresso) ou no console do PowerShell, ação ao terminar (perguntar se reinicia, reiniciar o Explorer ou não fazer nada), logs salvos, comandos exibidos ao passar o mouse e importar/exportar a seleção.
 
 ## Instalação

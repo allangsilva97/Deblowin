@@ -376,7 +376,8 @@ namespace Deblowin
             {
                 pageTitle.Text = category.Title.Get(st.Language);
                 int n = category.Groups.Sum(g => g.Items.Count);
-                pageSub.Text = n + " " + (st.Language == "pt" ? "ajustes" : "tweaks");
+                bool apps = category.Id == "apps";
+                pageSub.Text = n + " " + (apps ? "apps" : st.Language == "pt" ? "ajustes" : "tweaks");
                 foreach (var g in category.Groups) body.Children.Add(GroupCard(g));
             }
             else if (id == "search") BuildSearch(body);
@@ -839,9 +840,10 @@ namespace Deblowin
                     return;
             }
 
-            // Not %TEMP%: the "clean temporary files" tweak empties it while the script runs.
-            string dir = Path.Combine(Settings.Dir, "runs");
-            Directory.CreateDirectory(dir);
+            // Not %TEMP% or %LOCALAPPDATA%: the script runs elevated, so only administrators may write to its folder.
+            string dir = Settings.RunsDir;
+            try { Sys.EnsureAdminOnlyDir(dir); }
+            catch (Exception ex) { MessageBox.Show(this, ex.Message, "Deblowin", MessageBoxButton.OK, MessageBoxImage.Error); return; }
             string stamp = DateTime.Now.ToString("yyyyMMdd-HHmmss");
             string file = Path.Combine(dir, "run-" + stamp + ".ps1");
             bool console = st.RunMode == "console";
@@ -918,7 +920,7 @@ namespace Deblowin
         {
             if (proc == null || !running) return;
             canceled = true;
-            try { Process.Start(new ProcessStartInfo("taskkill", "/T /F /PID " + proc.Id) { CreateNoWindow = true, UseShellExecute = false }); }
+            try { Process.Start(new ProcessStartInfo(TaskKillExe, "/T /F /PID " + proc.Id) { CreateNoWindow = true, UseShellExecute = false }); }
             catch { }
         }
 
@@ -950,11 +952,17 @@ namespace Deblowin
             if (st.OnFinish == "ask")
             {
                 var r = MessageBox.Show(this, L.T("restartq"), "Deblowin", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
-                if (r == MessageBoxResult.Yes) Shell("shutdown", "/r /t 5");
+                if (r == MessageBoxResult.Yes) Shell(ShutdownExe, "/r /t 5");
                 else if (r == MessageBoxResult.No) RestartExplorer();
             }
             else if (st.OnFinish == "explorer") RestartExplorer();
         }
+
+        // Always full paths. A bare name is searched in the app's own folder first, so a file
+        // named taskkill.exe or explorer.exe dropped next to Deblowin.exe would run elevated.
+        static readonly string TaskKillExe = Path.Combine(Environment.SystemDirectory, "taskkill.exe");
+        static readonly string ShutdownExe = Path.Combine(Environment.SystemDirectory, "shutdown.exe");
+        static readonly string ExplorerExe = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Windows), "explorer.exe");
 
         static void Shell(string exe, string args)
         {
@@ -969,7 +977,7 @@ namespace Deblowin
             t.Tick += delegate
             {
                 t.Stop();
-                if (Process.GetProcessesByName("explorer").Length == 0) Shell("explorer.exe", "");
+                if (Process.GetProcessesByName("explorer").Length == 0) Shell(ExplorerExe, "");
             };
             t.Start();
         }
@@ -978,7 +986,7 @@ namespace Deblowin
         {
             string dir = Path.Combine(Settings.Dir, "logs");
             Directory.CreateDirectory(dir);
-            try { Process.Start("explorer.exe", "\"" + dir + "\""); } catch { }
+            try { Process.Start(ExplorerExe, "\"" + dir + "\""); } catch { }
         }
 
         void SaveScript()
@@ -1153,7 +1161,7 @@ namespace Deblowin
             var card = Card();
             var sp = new StackPanel { Margin = new Thickness(18) };
             sp.Children.Add(Txt(L.T("a.desc"), 14, false, false));
-            var stats = Txt(L.T("a.tweaks", cat.AllItems.Count, cat.Categories.Count) + "  ·  " + Sys.WindowsBuild() + "  ·  " + (Sys.IsAdmin() ? "admin" : "user"), 12.5, true, false);
+            var stats = Txt(L.T("a.tweaks", cat.TweakCount, cat.TweakCategoryCount) +"  ·  " + Sys.WindowsBuild() + "  ·  " + (Sys.IsAdmin() ? "admin" : "user"), 12.5, true, false);
             stats.Margin = new Thickness(0, 10, 0, 0);
             sp.Children.Add(stats);
             var cr = Txt(L.T("a.credits"), 13, false, false);

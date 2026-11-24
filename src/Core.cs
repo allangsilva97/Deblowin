@@ -9,8 +9,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web.Script.Serialization;
 using Microsoft.Win32;
 
@@ -88,15 +90,81 @@ namespace Deblowin
             return d.TryGetValue(k, out v) ? (v as object[] ?? new object[0]) : new object[0];
         }
 
+        // winget package ids look like "Publisher.Package"; anything else is refused so it can never
+        // inject shell syntax into the generated script.
+        static readonly Regex WingetId = new Regex(@"^[A-Za-z0-9][A-Za-z0-9._+-]{0,127}$");
+
         public static Catalog LoadEmbedded()
         {
+            var cat = Parse(ReadResource("catalog.json"));
+            AddApps(cat, ReadResource("apps.json"));
+            return cat;
+        }
+
+        static string ReadResource(string name)
+        {
             var asm = Assembly.GetExecutingAssembly();
-            using (var s = asm.GetManifestResourceStream("catalog.json"))
+            using (var s = asm.GetManifestResourceStream(name))
             using (var r = new StreamReader(s, Encoding.UTF8))
             {
-                return Parse(r.ReadToEnd());
+                return r.ReadToEnd();
             }
         }
+
+        // Adds the "Install apps" category (winget). Runs after the tweaks, so apps install last.
+        public static void AddApps(Catalog cat, string json)
+        {
+            var root = (Dictionary<string, object>)new JavaScriptSerializer().DeserializeObject(json);
+            foreach (Dictionary<string, object> c in Arr(root, "categories"))
+            {
+                var category = new Category { Id = Str(c, "id"), Title = LText.From(c["title"]) };
+                foreach (Dictionary<string, object> g in Arr(c, "groups"))
+                {
+                    object v;
+                    var group = new Group
+                    {
+                        Id = Str(g, "id"),
+                        Title = LText.From(g["title"]),
+                        Desc = g.TryGetValue("desc", out v) ? LText.From(v) : null,
+                        Category = category
+                    };
+                    foreach (Dictionary<string, object> a in Arr(g, "items"))
+                    {
+                        string wid = Str(a, "id");
+                        string name = Str(a, "name");
+                        if (wid == null || !WingetId.IsMatch(wid) || string.IsNullOrEmpty(name)) continue;
+                        var item = new Item
+                        {
+                            Id = "app:" + wid,
+                            Title = new LText { En = name, Pt = name },
+                            Desc = new LText { En = "winget: " + wid, Pt = "winget: " + wid },
+                            Commands = InstallCommands(name, wid),
+                            Group = group
+                        };
+                        if (cat.ById.ContainsKey(item.Id)) continue;
+                        group.Items.Add(item);
+                        cat.ById[item.Id] = item;
+                        cat.AllItems.Add(item);
+                    }
+                    if (group.Items.Count > 0) category.Groups.Add(group);
+                }
+                if (category.Groups.Count > 0) cat.Categories.Add(category);
+            }
+        }
+
+        static string[] InstallCommands(string name, string id)
+        {
+            return new[]
+            {
+                "Write-Host '-- Installing " + name.Replace("'", "''") + "' -ForegroundColor Magenta",
+                "winget install --id " + id + " --exact --source winget --silent --accept-package-agreements --accept-source-agreements",
+                "if ($LASTEXITCODE -ne 0) { Write-Host \"   winget exit code $LASTEXITCODE (already installed, or failed)\" -ForegroundColor Yellow }"
+            };
+        }
+
+        // Tweak items only (apps excluded), for counts shown in the UI.
+        public int TweakCount { get { return AllItems.Count(i => !i.Id.StartsWith("app:")); } }
+        public int TweakCategoryCount { get { return Categories.Count(c => c.Id != "apps"); } }
 
         public static Catalog Parse(string json)
         {
@@ -173,6 +241,13 @@ namespace Deblowin
             get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Deblowin"); }
         }
 
+        // Generated scripts run as administrator, so they live where only administrators can write.
+        // (A per-user folder would let any standard-user process swap the script before it runs.)
+        public static string RunsDir
+        {
+            get { return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Deblowin", "runs"); }
+        }
+
         static string FilePath { get { return Path.Combine(Dir, "settings.json"); } }
 
         public static Settings Load()
@@ -242,6 +317,10 @@ namespace Deblowin
             sb.AppendLine("$ErrorActionPreference = 'SilentlyContinue'");
             sb.AppendLine("try { [Console]::OutputEncoding = [System.Text.Encoding]::UTF8 } catch { }");
             sb.AppendLine("if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) { Write-Host 'This script requires administrator privileges.' -ForegroundColor Red; exit 5 }");
+            if (items.Any(i => i.Id.StartsWith("app:")))
+            {
+                sb.AppendLine("if (-not (Get-Command winget -ErrorAction SilentlyContinue)) { Write-Host 'winget not found. Install App Installer from the Microsoft Store, then run again.' -ForegroundColor Red }");
+            }
             sb.AppendLine();
 
             foreach (var it in items)
@@ -274,6 +353,20 @@ namespace Deblowin
         {
             try { return new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator); }
             catch { return false; }
+        }
+
+        // Directory that only Administrators and SYSTEM can write to (no inherited ACEs).
+        public static void EnsureAdminOnlyDir(string path)
+        {
+            Directory.CreateDirectory(path);
+            var sec = new DirectorySecurity();
+            sec.SetAccessRuleProtection(true, false);
+            var inherit = InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit;
+            sec.AddAccessRule(new FileSystemAccessRule(new SecurityIdentifier(WellKnownSidType.BuiltinAdministratorsSid, null),
+                FileSystemRights.FullControl, inherit, PropagationFlags.None, AccessControlType.Allow));
+            sec.AddAccessRule(new FileSystemAccessRule(new SecurityIdentifier(WellKnownSidType.LocalSystemSid, null),
+                FileSystemRights.FullControl, inherit, PropagationFlags.None, AccessControlType.Allow));
+            new DirectoryInfo(path).SetAccessControl(sec);
         }
 
         public static bool SystemUsesDark()

@@ -120,6 +120,29 @@ const SPECIAL = {
     ],
 };
 
+// ---------- security policy ----------
+// Upstream items that download and apply remote data as admin: never shipped.
+const DROP_IDS = new Set(["adobetelemetry"]);
+// Upstream items that weaken Windows protections: shipped, but warned and kept out of presets.
+const WEAKENS = {
+    coreisolation: {
+        en: "Security: turns off Memory Integrity (core isolation). Leave off only if you know why.",
+        pt: "Segurança: desliga a Integridade de Memória (isolamento de núcleo). Deixe desligado só se souber o motivo.",
+    },
+    wpbt: {
+        en: "Security: disables Windows Platform Binary Table protection against firmware-level tampering.",
+        pt: "Segurança: desativa a proteção da Windows Platform Binary Table contra adulteração no firmware.",
+    },
+    bitlocker: {
+        en: "Security: prevents disk encryption. Files on the drive stay readable to anyone with physical access.",
+        pt: "Segurança: impede a criptografia do disco. Os arquivos ficam legíveis para quem tiver acesso físico.",
+    },
+};
+// Services the bulk "manual services" tweak must not touch (updates, Defender network inspection, BitLocker).
+const KEEP_SERVICES = ["wuauserv", "WdNisSvc", "BDESVC"];
+// Anything that fetches or executes remote content is refused at build time.
+const REMOTE = /Invoke-WebRequest|Invoke-RestMethod|DownloadString|DownloadFile|Start-BitsTransfer|\biex\b|Invoke-Expression|\birm\b|\bcurl\b|\bwget\b|Net\.WebClient|https?:\/\//i;
+
 const tabTitleKey = {
     tools: "nav.tools", debloat: "nav.debloat", privacy: "nav.privacy",
     telemetry: "nav.telemetry", gaming: "nav.gaming", performance: "nav.performance",
@@ -157,12 +180,20 @@ while ((m = tagRe.exec(page))) {
 
     const mkItem = (it, radioGroup) => {
         const id = it.inputId ?? it.appId;
-        if (SKIP_IDS.has(id)) return null;
-        const commands = scripts[id] ?? SPECIAL[id];
+        if (SKIP_IDS.has(id) || DROP_IDS.has(id)) return null;
+        let commands = scripts[id] ?? SPECIAL[id];
         if (!commands) { missing.push(id); return null; }
+        if (id === "manualservices") {
+            const re = new RegExp(`"(${KEEP_SERVICES.join("|")})",`, "g");
+            commands = commands.map((c) => c.replace(re, ""));
+        }
+        for (const c of commands) {
+            if (REMOTE.test(c)) throw new Error(`refusing remote-fetch command in "${id}": ${c}`);
+        }
         const item = { id, title: tr(it.title), commands };
         const desc = trDesc(it.description ?? it.desc, it.title);
         if (desc) item.desc = desc;
+        if (WEAKENS[id]) item.desc = { en: WEAKENS[id].en, pt: WEAKENS[id].pt };
         if (radioGroup) item.radioGroup = radioGroup;
         return item;
     };
@@ -220,7 +251,7 @@ const expandPreset = (ids) =>
 const knownIds = new Set(allGroups.flatMap((g) => g.items.map((x) => x.id)));
 const outPresets = {};
 for (const [k, ids] of Object.entries(presets)) {
-    outPresets[k] = [...new Set(expandPreset(ids))].filter((id) => knownIds.has(id));
+    outPresets[k] = [...new Set(expandPreset(ids))].filter((id) => knownIds.has(id) && !WEAKENS[id]);
 }
 
 const catalog = {

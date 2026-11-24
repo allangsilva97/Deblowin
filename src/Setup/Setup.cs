@@ -79,14 +79,32 @@ namespace DeblowinSetup
             using (var f = File.Create(target)) s.CopyTo(f);
         }
 
+        // The install folder ends up in cmd.exe and in registry paths, so it is kept to a plain,
+        // unambiguous "...\Deblowin" folder outside Windows.
+        public static string CheckDir(string dir)
+        {
+            if (string.IsNullOrEmpty(dir) || !Path.IsPathRooted(dir))
+                throw new ArgumentException(T.S("The install folder must be a full path.", "A pasta de instalação precisa ser um caminho completo."));
+            string full = Path.GetFullPath(dir).TrimEnd('\\');
+            if (!string.Equals(Path.GetFileName(full), AppName, StringComparison.OrdinalIgnoreCase))
+                throw new ArgumentException(T.S("The install folder must end in \\Deblowin.", "A pasta de instalação precisa terminar em \\Deblowin."));
+            if (full.IndexOfAny(new[] { '"', '&', '|', '<', '>', '^', '%', '!' }) >= 0)
+                throw new ArgumentException(T.S("The install folder contains characters that are not allowed.", "A pasta de instalação tem caracteres não permitidos."));
+            string win = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
+            if (full.StartsWith(win, StringComparison.OrdinalIgnoreCase))
+                throw new ArgumentException(T.S("The install folder cannot be inside Windows.", "A pasta de instalação não pode estar dentro do Windows."));
+            return full;
+        }
+
         static void StopRunning(string dir)
         {
+            string prefix = Path.GetFullPath(dir).TrimEnd('\\') + "\\";
             foreach (var p in Process.GetProcessesByName("Deblowin"))
             {
                 try
                 {
                     string path = p.MainModule.FileName;
-                    if (path.StartsWith(dir, StringComparison.OrdinalIgnoreCase)) { p.Kill(); p.WaitForExit(5000); }
+                    if (path.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)) { p.Kill(); p.WaitForExit(5000); }
                 }
                 catch { }
             }
@@ -111,6 +129,7 @@ namespace DeblowinSetup
 
         public static void Install(string dir, bool desktop, Action<int, string> report)
         {
+            dir = CheckDir(dir);
             report(5, T.S("Preparing…", "Preparando…"));
             Directory.CreateDirectory(dir);
             StopRunning(dir);
@@ -152,6 +171,7 @@ namespace DeblowinSetup
 
         public static void Uninstall(string dir, bool removeData, Action<int, string> report)
         {
+            dir = CheckDir(dir);
             report(10, T.S("Closing Deblowin…", "Fechando o Deblowin…"));
             StopRunning(dir);
 
@@ -166,7 +186,9 @@ namespace DeblowinSetup
             if (removeData)
             {
                 string data = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), AppName);
+                string runs = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), AppName);
                 try { if (Directory.Exists(data)) Directory.Delete(data, true); } catch { }
+                try { if (Directory.Exists(runs)) Directory.Delete(runs, true); } catch { }
             }
 
             report(80, T.S("Unregistering…", "Removendo registro…"));
@@ -175,14 +197,16 @@ namespace DeblowinSetup
             // uninstall.exe cannot delete itself while running: let cmd do it after we exit.
             // "rd" without /s only removes the folder if it is empty.
             string uninst = Path.Combine(dir, "uninstall.exe");
+            // Full path to cmd.exe, and a working directory in System32: cmd searches the current
+            // folder for "ping" first, so a user-writable folder here would run attacker code elevated.
             try
             {
-                Process.Start(new ProcessStartInfo("cmd.exe",
+                Process.Start(new ProcessStartInfo(Path.Combine(Environment.SystemDirectory, "cmd.exe"),
                     "/c ping 127.0.0.1 -n 3 > nul & del /f /q \"" + uninst + "\" & rd \"" + dir + "\"")
                 {
                     CreateNoWindow = true,
                     UseShellExecute = false,
-                    WorkingDirectory = Path.GetTempPath()
+                    WorkingDirectory = Environment.SystemDirectory
                 });
             }
             catch { }

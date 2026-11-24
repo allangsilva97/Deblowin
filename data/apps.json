@@ -1,0 +1,111 @@
+{
+ "categories": [
+  {
+   "id": "apps",
+   "title": { "en": "Install apps", "pt": "Instalar apps" },
+   "groups": [
+    {
+     "id": "apps-browsers",
+     "title": { "en": "Browsers", "pt": "Navegadores" },
+     "desc": { "en": "Web browsers.", "pt": "Navegadores da web." },
+     "items": [
+      { "id": "Google.Chrome", "name": "Google Chrome" },
+      { "id": "Mozilla.Firefox", "name": "Mozilla Firefox" },
+      { "id": "Brave.Brave", "name": "Brave" }
+     ]
+    },
+    {
+     "id": "apps-communication",
+     "title": { "en": "Communication", "pt": "Comunicação" },
+     "desc": { "en": "Chat, calls and meetings.", "pt": "Mensagens, chamadas e reuniões." },
+     "items": [
+      { "id": "Discord.Discord", "name": "Discord" },
+      { "id": "Telegram.TelegramDesktop", "name": "Telegram Desktop" },
+      { "id": "Zoom.Zoom", "name": "Zoom" }
+     ]
+    },
+    {
+     "id": "apps-productivity",
+     "title": { "en": "Productivity", "pt": "Produtividade" },
+     "desc": { "en": "Documents, notes and passwords.", "pt": "Documentos, anotações e senhas." },
+     "items": [
+      { "id": "TheDocumentFoundation.LibreOffice", "name": "LibreOffice" },
+      { "id": "Adobe.Acrobat.Reader.64-bit", "name": "Adobe Acrobat Reader" },
+      { "id": "Notion.Notion", "name": "Notion" },
+      { "id": "Obsidian.Obsidian", "name": "Obsidian" },
+      { "id": "Bitwarden.Bitwarden", "name": "Bitwarden" },
+      { "id": "KeePassXCTeam.KeePassXC", "name": "KeePassXC" }
+     ]
+    },
+    {
+     "id": "apps-media",
+     "title": { "en": "Media", "pt": "Multimídia" },
+     "desc": { "en": "Video, audio, images and streaming.", "pt": "Vídeo, áudio, imagens e transmissão." },
+     "items": [
+      { "id": "VideoLAN.VLC", "name": "VLC media player" },
+      { "id": "Spotify.Spotify", "name": "Spotify" },
+      { "id": "OBSProject.OBSStudio", "name": "OBS Studio" },
+      { "id": "HandBrake.HandBrake", "name": "HandBrake" },
+      { "id": "GIMP.GIMP", "name": "GIMP" },
+      { "id": "Audacity.Audacity", "name": "Audacity" }
+     ]
+    },
+    {
+     "id": "apps-utilities",
+     "title": { "en": "Utilities", "pt": "Utilitários" },
+     "desc": { "en": "Everyday tools.", "pt": "Ferramentas do dia a dia." },
+     "items": [
+      { "id": "7zip.7zip", "name": "7-Zip" },
+      { "id": "Notepad++.Notepad++", "name": "Notepad++" },
+      { "id": "Microsoft.PowerToys", "name": "Microsoft PowerToys" },
+      { "id": "voidtools.Everything", "name": "Everything" },
+      { "id": "Greenshot.Greenshot", "name": "Greenshot" },
+      { "id": "qBittorrent.qBittorrent", "name": "qBittorrent" },
+      { "id": "Rufus.Rufus", "name": "Rufus" }
+     ]
+    },
+    {
+     "id": "apps-development",
+     "title": { "en": "Development", "pt": "Desenvolvimento" },
+     "desc": { "en": "Editors, runtimes and tools for developers.", "pt": "Editores, ambientes de execução e ferramentas para desenvolvedores." },
+     "items": [
+      { "id": "Microsoft.VisualStudioCode", "name": "Visual Studio Code" },
+      { "id": "Git.Git", "name": "Git" },
+      { "id": "Python.Python.3.13", "name": "Python 3.13" },
+      { "id": "OpenJS.NodeJS.LTS", "name": "Node.js LTS" },
+      { "id": "Microsoft.WindowsTerminal", "name": "Windows Terminal" },
+      { "id": "Microsoft.PowerShell", "name": "PowerShell 7" },
+      { "id": "Docker.DockerDesktop", "name": "Docker Desktop" }
+     ]
+    },
+    {
+     "id": "apps-gaming",
+     "title": { "en": "Gaming", "pt": "Jogos" },
+     "desc": { "en": "Game stores and launchers.", "pt": "Lojas e launchers de jogos." },
+     "items": [
+      { "id": "Valve.Steam", "name": "Steam" },
+      { "id": "EpicGames.EpicGamesLauncher", "name": "Epic Games Launcher" },
+      { "id": "GOG.Galaxy", "name": "GOG Galaxy" }
+     ]
+    },
+    {
+     "id": "apps-security",
+     "title": { "en": "Security", "pt": "Segurança" },
+     "desc": { "en": "Malware scanning.", "pt": "Varredura de malware." },
+     "items": [
+      { "id": "Malwarebytes.Malwarebytes", "name": "Malwarebytes" }
+     ]
+    },
+    {
+     "id": "apps-runtimes",
+     "title": { "en": "Runtimes", "pt": "Ambientes de execução" },
+     "desc": { "en": "Libraries many apps need.", "pt": "Bibliotecas que muitos apps exigem." },
+     "items": [
+      { "id": "Microsoft.VCRedist.2015+.x64", "name": "Visual C++ Redistributable (x64)" },
+      { "id": "Microsoft.DotNet.DesktopRuntime.8", "name": ".NET Desktop Runtime 8" }
+     ]
+    }
+   ]
+  }
+ ]
+}
